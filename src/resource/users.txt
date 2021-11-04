@@ -1,0 +1,7 @@
+Kosm/36987/ADMIN/
+Lora/368/USER/
+ServiceUserTest/Password/USER/
+SignInTest/SignInTest/USER/
+SignInTestAdmin/SignInTestAdmin/ADMIN/
+Test/123456/USER/
+Test2/32165/ADMIN/
