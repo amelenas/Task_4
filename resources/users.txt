@@ -1,3 +1,0 @@
-Kosm/36987/ADMIN/
-Lora/368/USER/
-Test/123456/USER/
