@@ -8,6 +8,8 @@ import by.stepanovichalena.library.service.BookServiceImpl;
 import by.stepanovichalena.library.service.exception.ServiceException;
 import org.junit.Test;
 
+import java.util.Collections;
+
 import static org.junit.Assert.*;
 
 public class BookServiceImplTest {

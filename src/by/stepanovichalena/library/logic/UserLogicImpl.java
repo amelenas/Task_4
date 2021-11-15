@@ -35,7 +35,7 @@ public class UserLogicImpl implements UserLogic {
     }
 
     private void setUser(User user) {
-        UserFactory.setUser(user);
+        UserHolder.setUser(user);
     }
 
     @Override

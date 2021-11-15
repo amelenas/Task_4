@@ -18,7 +18,6 @@ public class BookLogicImpl implements BookLogic {
         download();
     }
 
-
     @Override
     public boolean create(Book book) throws LogicException {
         if (book != null && !books.containsValue(book)) {
@@ -71,7 +70,7 @@ public class BookLogicImpl implements BookLogic {
 
     @Override
     public AccessLevel getLevel() {
-        return UserFactory.getUsersLevel();
+        return UserHolder.getUsersLevel();
     }
 
     private Collection<Book> findLibByTitle(String title) {

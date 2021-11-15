@@ -1,9 +1,8 @@
 package by.stepanovichalena.library.view;
 
-
 import by.stepanovichalena.library.controller.Actions;
 import by.stepanovichalena.library.controller.Controller;
-import by.stepanovichalena.library.service.exception.ServiceException;
+import by.stepanovichalena.library.controller.exception.ControllerException;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -20,7 +19,7 @@ public class View {
             request = scanner.nextLine();
             try {
                 response = controller.start(request);
-            } catch (ServiceException e) {
+            } catch (ControllerException e) {
                 response = e.getMessage();
             }
             System.out.println(response);

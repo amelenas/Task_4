@@ -11,8 +11,9 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class BookDAOImpl implements BookDAO {
-    public final static String PATH_TO_BOOK_LIST = "./resource/register of books.txt";
+    private static final String PATH_TO_BOOK_LIST = "resource/register of books.txt";
     public final static String DIVIDER = "/";
+
 
     private BookDAOImpl() {
     }

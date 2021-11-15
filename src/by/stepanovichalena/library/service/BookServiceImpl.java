@@ -2,7 +2,7 @@ package by.stepanovichalena.library.service;
 
 import by.stepanovichalena.library.entity.AccessLevel;
 import by.stepanovichalena.library.entity.Book;
-import by.stepanovichalena.library.logic.LibraryFactory;
+import by.stepanovichalena.library.logic.BookFactory;
 import by.stepanovichalena.library.logic.exception.LogicException;
 import by.stepanovichalena.library.logic.util.BookLogic;
 import by.stepanovichalena.library.service.exception.ServiceException;
@@ -23,17 +23,17 @@ public class BookServiceImpl implements BookService {
 
     public final static String DIVIDER = "/";
 
-    LibraryFactory libraryFactory;
+    BookFactory bookFactory;
     BookLogic bookLogic;
     BookValidation bookValidation;
 
     public BookServiceImpl() throws ServiceException {
         try {
-            libraryFactory = LibraryFactory.getInstance();
+            bookFactory = BookFactory.getInstance();
         } catch (LogicException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Exception in BookServiceImpl while LibraryFactory.getInstance()", e);
         }
-        bookLogic = libraryFactory.getBookDAO();
+        bookLogic = bookFactory.getBookDAO();
         bookValidation = BookValidator.getInstance();
     }
 

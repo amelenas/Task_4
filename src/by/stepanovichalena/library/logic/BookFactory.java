@@ -4,20 +4,20 @@ import by.stepanovichalena.library.logic.exception.LogicException;
 import by.stepanovichalena.library.logic.util.BookLogic;
 import by.stepanovichalena.library.logic.util.UserLogic;
 
-public class LibraryFactory {
-    private static LibraryFactory INSTANCE;
+public class BookFactory {
+    private static BookFactory INSTANCE;
     private BookLogic bookLogic;
     private UserLogic userLogic;
 
-    private LibraryFactory() throws LogicException {
+    private BookFactory() throws LogicException {
         bookLogic = new BookLogicImpl();
         userLogic = new UserLogicImpl();
     }
 
-    public static LibraryFactory getInstance() throws LogicException {
-        synchronized (LibraryFactory.class) {
+    public static BookFactory getInstance() throws LogicException {
+        synchronized (BookFactory.class) {
             if (INSTANCE == null) {
-                INSTANCE = new LibraryFactory();
+                INSTANCE = new BookFactory();
             }
         }
         return INSTANCE;
