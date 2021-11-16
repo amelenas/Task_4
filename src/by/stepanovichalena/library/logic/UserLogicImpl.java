@@ -13,7 +13,7 @@ import java.util.TreeSet;
 
 public class UserLogicImpl implements UserLogic {
     private static final TreeSet<User> users = new TreeSet<>();
-    UserDAO userDAO;
+    private UserDAO userDAO;
 
     public UserLogicImpl() throws LogicException {
         userDAO = UserDAOImpl.getInstance();

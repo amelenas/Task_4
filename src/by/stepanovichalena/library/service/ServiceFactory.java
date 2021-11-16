@@ -6,8 +6,8 @@ import by.stepanovichalena.library.service.util.UserService;
 
 public class ServiceFactory {
     private static ServiceFactory INSTANCE;
-    BookService bookService;
-    UserService userService;
+    private BookService bookService;
+    private UserService userService;
 
     private ServiceFactory() throws ServiceException {
         bookService = new BookServiceImpl();

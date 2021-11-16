@@ -12,7 +12,7 @@ import java.util.*;
 
 public class BookDAOImpl implements BookDAO {
     private static final String PATH_TO_BOOK_LIST = "resource/register of books.txt";
-    public final static String DIVIDER = "/";
+    private final static String DIVIDER = "/";
 
 
     private BookDAOImpl() {

@@ -6,7 +6,7 @@ import by.stepanovichalena.library.service.validation.util.BookValidation;
 
 public class BookValidator implements BookValidation {
     private static final int ID = -1;
-    public final static String DIVIDER = "/";
+    private final static String DIVIDER = "/";
 
     private BookValidator() {
     }

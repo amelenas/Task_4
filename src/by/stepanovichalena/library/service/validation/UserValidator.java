@@ -5,7 +5,7 @@ import by.stepanovichalena.library.entity.User;
 import by.stepanovichalena.library.service.validation.util.UserValidation;
 
 public class UserValidator implements UserValidation {
-    public final static String DIVIDER = " ";
+    private final static String DIVIDER = " ";
 
     private UserValidator() {
     }

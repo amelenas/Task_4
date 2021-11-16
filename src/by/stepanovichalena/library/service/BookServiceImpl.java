@@ -23,9 +23,9 @@ public class BookServiceImpl implements BookService {
 
     public final static String DIVIDER = "/";
 
-    BookFactory bookFactory;
-    BookLogic bookLogic;
-    BookValidation bookValidation;
+    private BookFactory bookFactory;
+    private BookLogic bookLogic;
+    private BookValidation bookValidation;
 
     public BookServiceImpl() throws ServiceException {
         try {

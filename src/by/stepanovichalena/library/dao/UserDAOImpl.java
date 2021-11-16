@@ -16,7 +16,7 @@ import java.util.TreeSet;
 
 public class UserDAOImpl implements UserDAO {
     private static final String PATH_TO_USERS_LIST = "resource/users.txt";
-    public final static String DIVIDER = "/";
+    private final static String DIVIDER = "/";
 
     private UserDAOImpl() {
     }

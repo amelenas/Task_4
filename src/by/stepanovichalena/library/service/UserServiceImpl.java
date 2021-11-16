@@ -15,9 +15,9 @@ public class UserServiceImpl implements UserService {
     private final static String LOG_IN_OK = "Welcome back";
     private final static String LOG_IN_ERROR = "Bad login or password";
 
-    BookFactory bookFactory;
-    UserLogic userLogic;
-    UserValidation userValidation;
+    private BookFactory bookFactory;
+    private UserLogic userLogic;
+    private UserValidation userValidation;
 
     public UserServiceImpl() throws ServiceException {
         try {
