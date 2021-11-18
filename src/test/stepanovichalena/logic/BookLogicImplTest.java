@@ -11,19 +11,13 @@ public class BookLogicImplTest {
     @Test
     public void create() throws LogicException {
         BookLogicImpl bookLogic = new BookLogicImpl();
-        assertTrue(bookLogic.create(new Book(30, "TestCreate", "TestCreate")));
+        assertTrue(bookLogic.addBook(new Book(0, "TestCreate", "TestCreate")));
     }
 
     @Test
     public void delete() throws LogicException {
         BookLogicImpl bookLogic = new BookLogicImpl();
-        assertTrue(bookLogic.delete(11));
-    }
-
-    @Test
-    public void update() throws LogicException {
-        BookLogicImpl bookLogic = new BookLogicImpl();
-        assertTrue(bookLogic.update(new Book(32, "TestUpdate", "TestUpdate")));
+        assertTrue(bookLogic.delete(new Book(27, "TestCreate", "TestCreate")));
     }
 
     @Test

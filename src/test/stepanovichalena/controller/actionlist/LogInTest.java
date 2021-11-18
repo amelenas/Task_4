@@ -9,11 +9,11 @@ public class LogInTest {
     @Test
     public void execute() throws ServiceException {
         LogIn logIn = new LogIn();
-        System.out.println(logIn.execute("SignInTest SignInTest USER"));
+        System.out.println(logIn.execute("SignInTest", "SignInTest"));
     }
     @Test
     public void executeWrongPassword() throws ServiceException {
         LogIn logIn = new LogIn();
-        System.out.println(logIn.execute("SignInTest SignIn USER"));
+        System.out.println(logIn.execute("SignInTest", "SignIn"));
     }
 }

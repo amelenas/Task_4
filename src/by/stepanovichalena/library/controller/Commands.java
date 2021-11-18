@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Commands {
-
     private static final Map<Actions, Command> commands = new HashMap<>();
 
     public Commands() {
@@ -16,19 +15,17 @@ public class Commands {
         commands.put(Actions.ADD_BOOK, new AddBook());
         commands.put(Actions.FIND_BOOK, new FindBook());
         commands.put(Actions.DELETE_BOOK, new DeleteBook());
-        commands.put(Actions.CHANGE_BOOK, new ChangeBook());
-        commands.put(Actions.WRONG_REQUEST, new ErrorRequest());
+        commands.put(Actions.SHOW_ALL, new ShowAll());
+        commands.put(Actions.WRONG_REQUEST, new WrongRequest());
     }
 
-    public Command getCommand(String name){
-        Actions actions = Actions.parse(name);
+    public Command getCommand(Actions actions){
         Command command;
         if (actions == null) {
             command = commands.get(Actions.WRONG_REQUEST);
         } else {
             command = commands.get(actions);
         }
-        return command; }
-
-
+        return command;
+    }
 }

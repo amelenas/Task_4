@@ -8,7 +8,6 @@ import by.stepanovichalena.library.entity.User;
 import by.stepanovichalena.library.logic.exception.LogicException;
 import by.stepanovichalena.library.logic.util.UserLogic;
 
-import java.io.IOException;
 import java.util.TreeSet;
 
 public class UserLogicImpl implements UserLogic {
@@ -40,7 +39,7 @@ public class UserLogicImpl implements UserLogic {
 
     @Override
     public boolean logIn(User user) {
-          if (users.contains(user)) {
+        if (users.contains(user)) {
             User u = users.ceiling(user);
             if (u != null) {
                 setUser(u);
@@ -53,8 +52,8 @@ public class UserLogicImpl implements UserLogic {
     private void download() throws LogicException {
         try {
             users.addAll(userDAO.readAll());
-        } catch (IOException e) {
-            throw new LogicException("Can't read file", e);
+        } catch (DAOException e) {
+            throw new LogicException("Exception in UserLogicImpl while download", e);
         }
     }
 
@@ -62,7 +61,7 @@ public class UserLogicImpl implements UserLogic {
         try {
             userDAO.writeAll(users);
         } catch (DAOException e) {
-            throw new LogicException("Can't read file", e);
+            throw new LogicException("Exception in UserLogicImpl while upload", e);
         }
     }
 }

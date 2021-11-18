@@ -5,11 +5,12 @@ import by.stepanovichalena.library.service.ServiceFactory;
 import by.stepanovichalena.library.service.exception.ServiceException;
 import by.stepanovichalena.library.service.util.BookService;
 
-public class ChangeBook  implements Command {
+public class ShowAll implements Command {
+
     @Override
-    public String execute(String request) throws ServiceException {
-        ServiceFactory factory = ServiceFactory.getInstance();
-        BookService bookService = factory.getBookService();
-        return bookService.update(request);
+    public String execute(String firstRequest, String secondRequest) throws ServiceException {
+            ServiceFactory factory = ServiceFactory.getInstance();
+            BookService bookService = factory.getBookService();
+            return bookService.showAll();
     }
 }

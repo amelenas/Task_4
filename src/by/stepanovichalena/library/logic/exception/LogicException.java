@@ -1,6 +1,7 @@
 package by.stepanovichalena.library.logic.exception;
 
 public class LogicException extends Exception{
+
     public LogicException() {
         super();
     }

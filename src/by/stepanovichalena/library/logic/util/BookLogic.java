@@ -7,11 +7,12 @@ import by.stepanovichalena.library.entity.AccessLevel;
 import java.util.Collection;
 
 public interface BookLogic {
-    boolean create(Book book) throws LogicException;
 
-    boolean delete(int id) throws LogicException;
+    boolean addBook(Book book) throws LogicException;
 
-    boolean update(Book book) throws LogicException;
+    boolean delete(Book book) throws LogicException;
+
+    Collection<Book> downloadAll() throws LogicException;
 
     Collection<Book> find(Book book);
 

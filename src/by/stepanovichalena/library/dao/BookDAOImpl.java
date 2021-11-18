@@ -14,7 +14,6 @@ public class BookDAOImpl implements BookDAO {
     private static final String PATH_TO_BOOK_LIST = "resource/register of books.txt";
     private final static String DIVIDER = "/";
 
-
     private BookDAOImpl() {
     }
 
@@ -56,13 +55,14 @@ public class BookDAOImpl implements BookDAO {
         }
     }
 
-        private Book parse(String line) {
+    private Book parse(String line) {
         Book book = null;
-        if (line != null || !line.equals("")) {
-            String[] array = line.split(DIVIDER);
-            if (array.length == 3) {
-                book = new Book(Integer.parseInt(array[0].trim()), array[1].trim(), array[2].trim());
-            }
+        if (line == null) {
+            book = new Book();
+        }
+        String[] array = line.split(DIVIDER);
+        if (array.length == 3) {
+            book = new Book(Integer.parseInt(array[0].trim()), array[1].trim(), array[2].trim());
         }
         return book;
     }

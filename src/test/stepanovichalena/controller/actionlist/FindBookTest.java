@@ -9,13 +9,38 @@ import static org.junit.Assert.*;
 public class FindBookTest {
 
     @Test
-    public void execute() throws ServiceException {
+    public void searchByTitlePositive() throws ServiceException {
         FindBook findBook = new FindBook();
-        assertEquals("Book found\n7/Jaws/Peter Benchley\n", findBook.execute("Jaws"));
+        System.out.println(findBook.execute("Jaws",""));
+    }
+
+    @Test
+    public void searchByTitleNegative() throws ServiceException {
+        FindBook findBook = new FindBook();
+        System.out.println(findBook.execute("Jaws2",""));
     }
     @Test
-    public void executeNotFound() throws ServiceException {
+    public void searchByAuthorPositive() throws ServiceException {
         FindBook findBook = new FindBook();
-        assertEquals("Book not found", findBook.execute("Jaws2"));
+        System.out.println(findBook.execute("","Peter Benchley"));
     }
+
+    @Test
+    public void searchByAuthorNegative() throws ServiceException {
+        FindBook findBook = new FindBook();
+        System.out.println(findBook.execute("","Peter Shmerchy"));
+    }
+
+    @Test
+    public void searchByAuthorAndTitle() throws ServiceException {
+        FindBook findBook = new FindBook();
+        System.out.println(findBook.execute("Jaws","Peter Benchley"));
+    }
+    @Test
+    public void searchNull() throws ServiceException {
+        FindBook findBook = new FindBook();
+        System.out.println(findBook.execute(null,null));
+    }
+
+
 }

@@ -22,6 +22,7 @@ public class ServiceFactory {
         }
         return INSTANCE;
     }
+
     public BookService getBookService() {
         return bookService;
     }

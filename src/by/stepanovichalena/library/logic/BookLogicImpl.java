@@ -19,9 +19,9 @@ public class BookLogicImpl implements BookLogic {
     }
 
     @Override
-    public boolean create(Book book) throws LogicException {
+    public boolean addBook(Book book) throws LogicException {
         if (book != null && !books.containsValue(book)) {
-            int id = books.size() + 1;
+            int id = books.size() + 2;
             book.setId(id);
             books.put(id, book);
             upload();
@@ -31,9 +31,11 @@ public class BookLogicImpl implements BookLogic {
     }
 
     @Override
-    public boolean delete(int id) throws LogicException {
-        if (books.containsKey(id)) {
-            books.remove(id);
+    public boolean delete(Book book) throws LogicException {
+        Collection<Book> tempBooks = find(book);
+        for (Book b : tempBooks){
+            if (b.getTitle().equals(book.getTitle()) && b.getAuthorsName().equals(book.getAuthorsName())){
+            books.remove(b.getId());}
             upload();
             return true;
         }
@@ -41,60 +43,39 @@ public class BookLogicImpl implements BookLogic {
     }
 
     @Override
-    public boolean update(Book book) throws LogicException {
-        if (book == null) {
-            return false;
-        }
-        if (books.containsKey(book.getId())) {
-            books.replace(book.getId(), book);
-            upload();
-            return true;
-        }
-        return false;
+    public Collection<Book> downloadAll() throws LogicException {
+        download();
+        return books.values();
     }
 
     @Override
     public Collection<Book> find(Book book) {
         String title = book.getTitle();
         String author = book.getAuthorsName();
-        Set<Book> result = new HashSet<>();
         Set<Book> resultByTitle = (Set<Book>) findLibByTitle(title);
-        Set<Book> resultByAuthor = (Set<Book>) findLibByAuthor(author);
-        for (Book b : resultByTitle) {
-            if (resultByAuthor.contains(b)) {
-                result.add(b);
-            }
-        }
-        return result;
+        Set<Book> resultByAuthor = (Set<Book>) findByAuthor(author);
+        resultByAuthor.addAll(resultByTitle);
+        return resultByAuthor;
     }
 
-    @Override
     public AccessLevel getLevel() {
         return UserHolder.getUsersLevel();
     }
 
     private Collection<Book> findLibByTitle(String title) {
         Set<Book> result = new HashSet<>();
-        if (title == null || title.equals("")) {
-            result.addAll(books.values());
-            return result;
-        }
         for (Book book : books.values()) {
-            if (book.getTitle().contains(title)) {
+            if (title.length() > 0 && book.getTitle().contains(title)) {
                 result.add(book);
             }
         }
         return result;
     }
 
-    private Collection<Book> findLibByAuthor(String author) {
+    private Collection<Book> findByAuthor(String author) {
         Set<Book> result = new HashSet<>();
-        if (author == null || author.equals("")) {
-            result.addAll(books.values());
-            return result;
-        }
         for (Book book : books.values()) {
-            if (book.getAuthorsName().contains(author)) {
+            if (author.length() >0 && book.getAuthorsName().contains(author)) {
                 result.add(book);
             }
         }

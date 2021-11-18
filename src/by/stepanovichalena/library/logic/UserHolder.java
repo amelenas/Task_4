@@ -15,5 +15,4 @@ public class UserHolder {
     public static AccessLevel getUsersLevel() {
         return user.getAccessLevel();
     }
-
 }

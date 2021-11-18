@@ -9,12 +9,12 @@ public class UserServiceImplTest {
     @Test
     public void register() throws ServiceException {
         UserServiceImpl userService = new UserServiceImpl();
-        System.out.println(userService.register("ServiceUserTest Password"));
+        System.out.println(userService.register("ServiceUserTest", "Password"));
     }
 
     @Test
     public void logIn() throws ServiceException {
         UserServiceImpl userService = new UserServiceImpl();
-        System.out.println(userService.logIn("ServiceUserTest Password"));
+        System.out.println(userService.logIn("ServiceUserTest", "Password"));
     }
 }

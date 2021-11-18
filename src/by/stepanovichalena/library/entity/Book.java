@@ -2,7 +2,7 @@ package by.stepanovichalena.library.entity;
 
 import java.io.Serializable;
 
-public class Book implements Serializable {
+public class Book implements Serializable, Comparable {
     private static final long serialVersionUID = 354654523246754623L;
     private int id;
     private String title;
@@ -41,10 +41,6 @@ public class Book implements Serializable {
         this.title = title;
     }
 
-    public String allBookInformation() {
-        return getId() + " / " + getTitle() + " / " + getAuthorsName();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -72,4 +68,11 @@ public class Book implements Serializable {
                 ", title='" + title + '\'' +
                 '}';
     }
+
+    @Override
+    public int compareTo(Object o) {
+        Book book = (Book) o;
+        return id-book.id;
+    }
+
 }

@@ -6,10 +6,11 @@ import by.stepanovichalena.library.service.exception.ServiceException;
 import by.stepanovichalena.library.service.util.UserService;
 
 public class LogIn implements Command {
+
     @Override
-    public String execute(String request) throws ServiceException {
+    public String execute(String firstRequest, String secondRequest) throws ServiceException {
         ServiceFactory factory = ServiceFactory.getInstance();
         UserService userService = factory.getClientService();
-        return userService.logIn(request);
+        return userService.logIn(firstRequest, secondRequest);
     }
 }

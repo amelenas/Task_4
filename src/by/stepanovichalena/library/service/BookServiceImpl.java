@@ -15,17 +15,14 @@ import java.util.Collection;
 public class BookServiceImpl implements BookService {
     private final static String ADD = "Book added";
     private final static String DELETE = "Book deleted";
-    private final static String CHANGE = "Book changed";
     private final static String FIND = "Book found";
     private final static String SUCCESS = "Request completed";
     private final static String ERROR = "Error while";
     private final static String BOOK_NOT_FOUND = "Book not found";
 
-    public final static String DIVIDER = "/";
-
     private BookFactory bookFactory;
     private BookLogic bookLogic;
-    private BookValidation bookValidation;
+    private BookValidation bookValidation = new BookValidator();
 
     public BookServiceImpl() throws ServiceException {
         try {
@@ -34,18 +31,20 @@ public class BookServiceImpl implements BookService {
             throw new ServiceException("Exception in BookServiceImpl while LibraryFactory.getInstance()", e);
         }
         bookLogic = bookFactory.getBookDAO();
-        bookValidation = BookValidator.getInstance();
     }
 
 
     @Override
-    public String addBook(String request) throws ServiceException {
+    public String addBook(String title, String authorsName) throws ServiceException {
         boolean needUpdate = false;
-        Book book = bookValidation.validateCreate(request);
+        Book book = new Book(0,"","");
+        if (bookValidation.isBookDataValid(title, authorsName)) {
+            book.setTitle(title);
+            book.setAuthorsName(authorsName);
+        }
         try {
-           if (isCorrectAccessLevel(AccessLevel.ADMIN)) {
-                needUpdate = bookLogic.create(book);
-                System.out.println(needUpdate);
+            if (isCorrectAccessLevel(AccessLevel.ADMIN)) {
+                needUpdate = bookLogic.addBook(book);
             }
         } catch (LogicException e) {
             throw new ServiceException(e);
@@ -55,44 +54,55 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public String find(String request) {
+    public String find(String title, String authorsName) {
         StringBuilder res = new StringBuilder();
-        Book book = bookValidation.validateSearch(request);
-        Collection<Book> lib = bookLogic.find(book);
-        if(lib.size()>0){
-        res = new StringBuilder(FIND + "\n");
-        for (Book b : lib) {
-            String line = String.join(DIVIDER, String.valueOf(b.getId()), b.getTitle(), b.getAuthorsName());
-            res.append(line).append("\n");
+        Book book = new Book(-1, "", "");
+        if (bookValidation.isTitleValid(title)) {
+            book.setTitle(title);
         }
-        }else {
+        if (bookValidation.isAuthorsNameValid(authorsName)) {
+            book.setAuthorsName(authorsName);
+        }
+        Collection<Book> lib = bookLogic.find(book);
+        if (lib.size() > 0) {
+            res = new StringBuilder(FIND + "\n");
+            for (Book b : lib) {
+                String line = String.join(" ", String.valueOf(b.getId()), b.getTitle(), b.getAuthorsName());
+                res.append(line).append("\n");
+            }
+        } else {
             res.append(BOOK_NOT_FOUND);
         }
         return res.toString();
     }
 
     @Override
-    public String update(String request) throws ServiceException {
-        boolean needUpdate = false;
+    public String showAll() throws ServiceException {
+        StringBuilder result = new StringBuilder();
+
         try {
-            if (isCorrectAccessLevel(AccessLevel.ADMIN)) {
-                Book book = bookValidation.validateUpdate(request);
-                needUpdate = bookLogic.update(book);
+            Collection<Book> books = bookLogic.downloadAll();
+            for (Book book : books) {
+                String line = String.join(" ", String.valueOf(book.getId()), book.getTitle(), book.getAuthorsName());
+                result.append(line).append("\n");
             }
         } catch (LogicException e) {
-           throw new ServiceException();
+            throw new ServiceException("Exception in BookServiceImpl while while loading the list", e);
         }
-        return result(CHANGE, needUpdate);
 
+        return result.toString();
     }
 
     @Override
-    public String delete(String request) throws ServiceException {
+    public String delete(String title, String authorsName) throws ServiceException {
         boolean needUpdate = false;
+        Book book = new Book();
         try {
-             if (isCorrectAccessLevel(AccessLevel.ADMIN)) {
-                int id = bookValidation.validateDelete(request);
-                needUpdate = bookLogic.delete(id);
+            if (isCorrectAccessLevel(AccessLevel.ADMIN)) {
+                if (bookValidation.isBookDataValid(title, authorsName)) {
+                    book = new Book(-1, title, authorsName);
+                }
+                needUpdate = bookLogic.delete(book);
             }
         } catch (LogicException e) {
             throw new ServiceException(e);
@@ -106,7 +116,7 @@ public class BookServiceImpl implements BookService {
         return res;
     }
 
-    private boolean isCorrectAccessLevel (AccessLevel ... levels) {
+    private boolean isCorrectAccessLevel(AccessLevel... levels) {
         AccessLevel level = bookLogic.getLevel();
         for (AccessLevel accessLevel : levels) {
             if (level.equals(accessLevel)) {

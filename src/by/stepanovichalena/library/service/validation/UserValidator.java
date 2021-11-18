@@ -1,35 +1,27 @@
 package by.stepanovichalena.library.service.validation;
 
-import by.stepanovichalena.library.entity.AccessLevel;
-import by.stepanovichalena.library.entity.User;
 import by.stepanovichalena.library.service.validation.util.UserValidation;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class UserValidator implements UserValidation {
-    private final static String DIVIDER = " ";
+    private final static String COMMON_PATTERN = "([\\w_])";
+    private final static String PASSWORD_PATTERN = COMMON_PATTERN + "{5,20}";
+    private final static String NAME_PATTERN = COMMON_PATTERN + "{2,30}";
 
-    private UserValidator() {
-    }
-
-    private static class UserValidatorHolder {
-        public static final UserValidator HOLDER_INSTANCE = new UserValidator();
-    }
-
-    public static UserValidator getInstance() {
-        return UserValidatorHolder.HOLDER_INSTANCE;
-    }
 
     @Override
-    public User validateUser(String user) {
-         if (user == null) {
-            return null;
+    public boolean isUserDataValid(String userName, String password) {
+         if (userName == null|| password == null) {
+            return false;
         }
-        String[] array = user.split(DIVIDER);
-        if (array.length == 2) {
-            return new User(array[0], array[1], AccessLevel.DEFAULT);}
-        if (array.length == 3) {
-            return new User(array[0], array[1], AccessLevel.valueOf(array[2]));}
-        else {
-            return new User(array[0], "", AccessLevel.DEFAULT);
-        }
+          return isDataValid(NAME_PATTERN, userName) && isDataValid(PASSWORD_PATTERN, password);
+    }
+
+    private boolean isDataValid(String pattern, String arg) {
+        Pattern patternCompile = Pattern.compile(pattern);
+        Matcher matcher = patternCompile.matcher(arg);
+        return matcher.matches();
     }
 }

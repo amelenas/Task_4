@@ -10,16 +10,25 @@ public class AddBookTest {
     @Test
     public void executeAdmin() throws ServiceException {
         LogIn logIn = new LogIn();
-        System.out.println(logIn.execute("Kosm 36987"));
+        System.out.println(logIn.execute("Kosm", "36987"));
         AddBook addBook = new AddBook();
-        System.out.println(addBook.execute("Alice in Wonderland/Lewis Carroll"));
+        System.out.println(addBook.execute("Alice in Wonderland", "Lewis Carroll"));
     }
+
     @Test
     public void executeUser() throws ServiceException {
         LogIn logIn = new LogIn();
-        System.out.println(logIn.execute("Lora 368"));
+        System.out.println(logIn.execute("Goggi", "Goggi"));
         AddBook addBook = new AddBook();
-        System.out.println(addBook.execute("Alice in Wonderland/Lewis Carroll"));
+        System.out.println(addBook.execute("Alice in Wonderland", "Lewis Carroll"));
+    }
+
+    @Test
+    public void titleNumber() throws ServiceException {
+        LogIn logIn = new LogIn();
+        System.out.println(logIn.execute("UserName", "UserName"));
+        AddBook addBook = new AddBook();
+        System.out.println(addBook.execute("9999", "Lewis C"));
     }
 
 }

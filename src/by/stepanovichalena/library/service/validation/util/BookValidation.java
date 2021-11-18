@@ -1,15 +1,10 @@
 package by.stepanovichalena.library.service.validation.util;
 
-import by.stepanovichalena.library.entity.Book;
-
 public interface BookValidation {
 
-    Book validateSearch(String book);
+    boolean isBookDataValid(String authorsName, String title);
 
-    Book validateCreate(String book);
+    boolean isAuthorsNameValid(String authorsName);
 
-    Book validateUpdate(String book);
-
-    int validateDelete(String id);
-
+    boolean isTitleValid(String title);
 }

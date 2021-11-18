@@ -30,37 +30,45 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public Collection<User> readAll() throws IOException {
+    public Collection<User> readAll() throws DAOException {
         Set<User> users = new TreeSet<>();
-        List<String> textLines = Files.readAllLines(Paths.get(PATH_TO_USERS_LIST));
+        List<String> textLines;
+        try {
+            textLines = Files.readAllLines(Paths.get(PATH_TO_USERS_LIST));
+        } catch (IOException e) {
+            throw new DAOException("Can't read file", e);
+        }
         for (String line : textLines) {
             User user = parse(line);
-            if (user != null){
-                users.add(user);
-            }
+           if (user.getName()!= null){
+                users.add(user);}
         }
         return users;
     }
 
     @Override
     public void writeAll(Collection<User> users) throws DAOException {
-       try (FileOutputStream writer = new FileOutputStream(PATH_TO_USERS_LIST, false)) {
-        for (User user: users) {
-            String str = String.join(DIVIDER, user.getName(), user.getPassword(), user.getAccessLevel().toString(), "\n");
-            writer.write(str.getBytes());
+        try (FileOutputStream writer = new FileOutputStream(PATH_TO_USERS_LIST, false)) {
+            for (User user : users) {
+                String str = String.join(DIVIDER, user.getName(), user.getPassword(), user.getAccessLevel().toString(), "\n");
+                writer.write(str.getBytes());
+            }
+        } catch (IOException e) {
+            throw new DAOException("Can't write file", e);
         }
-       } catch (IOException e) {
-          throw new DAOException("Can't write file", e);
-       }
     }
 
     private User parse(String line) {
-        User client = null;
-        if (line != null || !line.equals("")) {
+        User user = new User();
+        if (line != null) {
             String[] array = line.split(DIVIDER);
-            if (array.length > 2){
-            client = new User(array[0], array[1], AccessLevel.valueOf(array[2].trim().toUpperCase()));}
+            if (array.length > 2) {
+                user.setName(array[0]);
+                user.setPassword(array[1]);
+                user.setAccessLevel(AccessLevel.valueOf(array[2].trim().toUpperCase()));
+            }
         }
-        return client;
+        return user;
     }
 }
+

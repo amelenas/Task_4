@@ -1,6 +1,7 @@
 package by.stepanovichalena.library.controller.exception;
 
 public class ControllerException extends Exception {
+
     public ControllerException() {
         super();
     }

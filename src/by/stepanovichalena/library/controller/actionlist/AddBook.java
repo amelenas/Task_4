@@ -6,11 +6,12 @@ import by.stepanovichalena.library.service.exception.ServiceException;
 import by.stepanovichalena.library.service.util.BookService;
 
 public class AddBook implements Command {
+
     @Override
-    public String execute(String request) throws ServiceException {
+    public String execute(String firstRequest, String secondRequest) throws ServiceException {
         ServiceFactory factory = ServiceFactory.getInstance();
         BookService bookService = factory.getBookService();
-        return bookService.addBook(request);
+        return bookService.addBook(firstRequest, secondRequest);
     }
 }
 

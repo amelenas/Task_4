@@ -3,15 +3,16 @@ package test.stepanovichalena.dao;
 import by.stepanovichalena.library.dao.BookDAOImpl;
 import by.stepanovichalena.library.dao.exception.DAOException;
 import by.stepanovichalena.library.entity.Book;
+import org.junit.Before;
 import org.junit.Test;
 
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class BookDAOImplTest {
 
-    @Test
+    @Before
     public void readAll() throws DAOException {
         Map<Integer, Book> map = BookDAOImpl.getInstance().readAll();
         System.out.println(map);
@@ -19,10 +20,12 @@ public class BookDAOImplTest {
 
     @Test
     public void writeAll() throws DAOException {
-        Set<Book> map = new HashSet<>();
-        Book book = new Book(31, "Test", "Test");
-        map.add(book);
-        BookDAOImpl.getInstance().writeAll(map);
+        Map<Integer, Book> map = BookDAOImpl.getInstance().readAll();
+        int key = map.size()+1;
+        Book book = new Book(key, "Test", "Test");
+        map.put(key, book);
+        Set<Book> allValues = new TreeSet<>(map.values());
+        BookDAOImpl.getInstance().writeAll(allValues);
         System.out.println(map);
     }
 }
