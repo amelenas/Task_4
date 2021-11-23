@@ -1,8 +1,10 @@
-package by.stepanovichalena.library.dao;
+package by.stepanovichalena.library.source.impl;
 
-import by.stepanovichalena.library.dao.exception.DAOException;
+import by.stepanovichalena.library.source.BookSource;
+import by.stepanovichalena.library.source.exception.DAOException;
 import by.stepanovichalena.library.entity.Book;
-import by.stepanovichalena.library.dao.util.BookDAO;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -10,19 +12,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
-public class BookDAOImpl implements BookDAO {
+public class BookSourceImpl implements BookSource {
+    private static final Logger LOGGER = LogManager.getLogger(BookSourceImpl.class);
     private static final String PATH_TO_BOOK_LIST = "resource/register of books.txt";
-    private final static String DIVIDER = "/";
+    private final static String DELIMITER = "/";
 
-    private BookDAOImpl() {
-    }
-
-    private static class BookSourceActionHolder {
-        public static final BookDAOImpl HOLDER_INSTANCE = new BookDAOImpl();
-    }
-
-    public static BookDAOImpl getInstance() {
-        return BookSourceActionHolder.HOLDER_INSTANCE;
+    public BookSourceImpl() {
     }
 
     @Override
@@ -47,20 +42,21 @@ public class BookDAOImpl implements BookDAO {
     public void writeAll(Collection<Book> books) throws DAOException {
         try (FileOutputStream writer = new FileOutputStream(PATH_TO_BOOK_LIST, false)) {
             for (Book book : books) {
-                String str = String.join(DIVIDER, String.valueOf(book.getId()), book.getTitle(), book.getAuthorsName(), "\n");
+                String str = String.join(DELIMITER, String.valueOf(book.getId()), book.getTitle(), book.getAuthorsName(), "\n");
                 writer.write(str.getBytes());
             }
         } catch (IOException e) {
+            LOGGER.error("Exception in BookSourceImpl while trying to write ", e);
             throw new DAOException("Can't write file", e);
         }
     }
 
     private Book parse(String line) {
-        Book book = null;
+        Book book = new Book();
         if (line == null) {
-            book = new Book();
+            return book;
         }
-        String[] array = line.split(DIVIDER);
+        String[] array = line.split(DELIMITER);
         if (array.length == 3) {
             book = new Book(Integer.parseInt(array[0].trim()), array[1].trim(), array[2].trim());
         }

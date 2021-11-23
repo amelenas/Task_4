@@ -1,4 +1,4 @@
-package by.stepanovichalena.library.logic;
+package by.stepanovichalena.library.service;
 
 import by.stepanovichalena.library.entity.AccessLevel;
 import by.stepanovichalena.library.entity.User;

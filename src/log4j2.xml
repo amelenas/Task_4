@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<properties>
+		<property name="name">library</property>
+	</properties>
+	<appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="[%t] %-5p (%F:%L) - %msg%n"/>
+		</Console>
+		<RollingFile name="RollingFile" fileName="logs/${name}.log"
+			filePattern="logs/$${date:yyyy-MM}/${name}-%d{yyyy-MM-dd}-%i.log.gz">
+			<PatternLayout pattern="%d{HH:mm:ss} | [%t] | %-5p | %C - %msg%n"/>
+			<Policies>
+				<SizeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="100 KB"/>
+			</Policies>
+		</RollingFile>
+	</appenders>
+	<loggers>
+		<root level="debug">
+			<AppenderRef ref="Console"/>
+			<AppenderRef ref="RollingFile" level="warn"/>
+		</root>
+	</loggers>
+</configuration>

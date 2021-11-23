@@ -6,7 +6,7 @@ import by.stepanovichalena.library.service.exception.ServiceException;
 public class WrongRequest implements Command {
 
     @Override
-    public String execute(String firstRequest, String secondRequest) throws ServiceException {
+    public String execute(String request) throws ServiceException {
         return "Wrong request";
     }
 }

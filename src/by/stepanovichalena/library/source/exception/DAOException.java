@@ -1,4 +1,4 @@
-package by.stepanovichalena.library.dao.exception;
+package by.stepanovichalena.library.source.exception;
 
 public class DAOException extends Exception{
 

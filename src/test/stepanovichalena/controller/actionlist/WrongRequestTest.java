@@ -9,6 +9,12 @@ public class WrongRequestTest {
     @Test
     public void execute() throws ServiceException {
         WrongRequest errorRequest = new WrongRequest();
-        System.out.println(errorRequest.execute("Error request", ""));
+        System.out.println(errorRequest.execute("Error request/"));
+    }
+
+    @Test
+    public void executeNull() throws ServiceException {
+        WrongRequest errorRequest = new WrongRequest();
+        System.out.println(errorRequest.execute(null));
     }
 }

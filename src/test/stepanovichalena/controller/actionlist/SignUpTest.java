@@ -9,6 +9,12 @@ public class SignUpTest {
     @Test
     public void executeUser() throws ServiceException {
         SignUp signUp = new SignUp();
-        System.out.println(signUp.execute("SignInTest", "SignInTest"));
+        System.out.println(signUp.execute("SignInTest/SignInTest"));
    }
+
+    @Test
+    public void executeNull() throws ServiceException {
+        SignUp signUp = new SignUp();
+        System.out.println(signUp.execute(null));
+    }
 }

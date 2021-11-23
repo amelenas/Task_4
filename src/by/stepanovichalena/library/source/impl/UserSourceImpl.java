@@ -1,9 +1,11 @@
-package by.stepanovichalena.library.dao;
+package by.stepanovichalena.library.source.impl;
 
-import by.stepanovichalena.library.dao.exception.DAOException;
+import by.stepanovichalena.library.source.UserSource;
+import by.stepanovichalena.library.source.exception.DAOException;
 import by.stepanovichalena.library.entity.AccessLevel;
 import by.stepanovichalena.library.entity.User;
-import by.stepanovichalena.library.dao.util.UserDAO;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,19 +16,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class UserDAOImpl implements UserDAO {
+public class UserSourceImpl implements UserSource {
+    private static final Logger LOGGER = LogManager.getLogger(UserSourceImpl.class);
+
     private static final String PATH_TO_USERS_LIST = "resource/users.txt";
     private final static String DIVIDER = "/";
 
-    private UserDAOImpl() {
-    }
-
-    private static class UserSourceActionHolder {
-        public static final UserDAOImpl HOLDER_INSTANCE = new UserDAOImpl();
-    }
-
-    public static UserDAOImpl getInstance() {
-        return UserSourceActionHolder.HOLDER_INSTANCE;
+    public UserSourceImpl() {
     }
 
     @Override
@@ -48,13 +44,16 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void writeAll(Collection<User> users) throws DAOException {
-        try (FileOutputStream writer = new FileOutputStream(PATH_TO_USERS_LIST, false)) {
-            for (User user : users) {
-                String str = String.join(DIVIDER, user.getName(), user.getPassword(), user.getAccessLevel().toString(), "\n");
-                writer.write(str.getBytes());
+        if (users != null) {
+            try (FileOutputStream writer = new FileOutputStream(PATH_TO_USERS_LIST, false)) {
+                for (User user : users) {
+                    String str = String.join(DIVIDER, user.getName(), user.getPassword(), user.getAccessLevel().toString(), "\n");
+                    writer.write(str.getBytes());
+                }
+            } catch (IOException e) {
+                LOGGER.error("Exception in UserSourceImpl while trying to write ", e);
+                throw new DAOException("Can't write file", e);
             }
-        } catch (IOException e) {
-            throw new DAOException("Can't write file", e);
         }
     }
 

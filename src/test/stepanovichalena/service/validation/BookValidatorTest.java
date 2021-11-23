@@ -16,7 +16,7 @@ public class BookValidatorTest {
 
     @Test
     public void validateNameAndTitleNegative() {
-        assertFalse(bookValidator.isBookDataValid("Author32", "Book"));
+        assertFalse(bookValidator.isBookDataValid("Book", "Author32"));
     }
 
     @Test

@@ -1,26 +1,30 @@
-package by.stepanovichalena.library.logic;
+package by.stepanovichalena.library.dao.impl;
 
-import by.stepanovichalena.library.dao.UserDAOImpl;
-import by.stepanovichalena.library.dao.exception.DAOException;
-import by.stepanovichalena.library.dao.util.UserDAO;
+import by.stepanovichalena.library.source.UserSource;
+import by.stepanovichalena.library.source.exception.DAOException;
 import by.stepanovichalena.library.entity.AccessLevel;
 import by.stepanovichalena.library.entity.User;
-import by.stepanovichalena.library.logic.exception.LogicException;
-import by.stepanovichalena.library.logic.util.UserLogic;
+import by.stepanovichalena.library.service.UserHolder;
+import by.stepanovichalena.library.dao.UserDAO;
+import by.stepanovichalena.library.dao.exception.LibraryDAOException;
 
 import java.util.TreeSet;
 
-public class UserLogicImpl implements UserLogic {
+public class UserDAOImpl implements UserDAO {
     private static final TreeSet<User> users = new TreeSet<>();
-    private UserDAO userDAO;
+    private UserSource userSource;
 
-    public UserLogicImpl() throws LogicException {
-        userDAO = UserDAOImpl.getInstance();
+    public UserDAOImpl() {
+    }
+
+    @Override
+    public void connectUserSource(UserSource userSource) throws LibraryDAOException {
+        this.userSource = userSource;
         download();
     }
 
     @Override
-    public boolean register(User user) throws LogicException {
+    public boolean register(User user) throws LibraryDAOException {
         if (user != null && !users.contains(user)) {
             if (user.getAccessLevel() != AccessLevel.ADMIN) {
                 user.setAccessLevel(AccessLevel.USER);
@@ -49,19 +53,20 @@ public class UserLogicImpl implements UserLogic {
         return false;
     }
 
-    private void download() throws LogicException {
+
+    private void download() throws LibraryDAOException {
         try {
-            users.addAll(userDAO.readAll());
+            users.addAll(userSource.readAll());
         } catch (DAOException e) {
-            throw new LogicException("Exception in UserLogicImpl while download", e);
+            throw new LibraryDAOException("Exception in UserLogicImpl while download", e);
         }
     }
 
-    private void upload() throws LogicException {
+    private void upload() throws LibraryDAOException {
         try {
-            userDAO.writeAll(users);
+            userSource.writeAll(users);
         } catch (DAOException e) {
-            throw new LogicException("Exception in UserLogicImpl while upload", e);
+            throw new LibraryDAOException("Exception in UserLogicImpl while upload", e);
         }
     }
 }
