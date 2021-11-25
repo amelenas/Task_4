@@ -1,33 +1,24 @@
 package test.stepanovichalena.controller.actionlist;
 
-import by.stepanovichalena.library.controller.actionlist.LogIn;
-import by.stepanovichalena.library.controller.actionlist.ShowAll;
-import by.stepanovichalena.library.service.exception.ServiceException;
+import by.stepanovichalena.library.controller.exception.ControllerException;
+import by.stepanovichalena.library.controller.impl.actionlist.book.ShowAll;
+import by.stepanovichalena.library.dao.factory.impl.LibraryDAOFactory;
 import org.junit.Test;
 
 public class ShowAllTest {
+    LibraryDAOFactory libraryDAO = LibraryDAOFactory.getInstance();
 
     @Test
-    public void executeAdmin() throws ServiceException {
-        LogIn logIn = new LogIn();
-        System.out.println(logIn.execute("Kosm/36987"));
-        ShowAll showAllTest = new ShowAll();
-        System.out.println(showAllTest.execute("/"));
+    public void executePositive() throws ControllerException {
+        ShowAll showAllTest = new ShowAll(libraryDAO.getBookDAO());
+        showAllTest.request("", "");
+       System.out.println(showAllTest.execute());
     }
 
     @Test
-    public void executeUser() throws ServiceException {
-        LogIn logIn = new LogIn();
-        System.out.println(logIn.execute("SignInTest/SignInTest"));
-        ShowAll showAllTest = new ShowAll();
-        System.out.println(showAllTest.execute("/"));
-    }
-
-    @Test
-    public void executeNull() throws ServiceException {
-        LogIn logIn = new LogIn();
-        System.out.println(logIn.execute("SignInTest/SignInTest"));
-        ShowAll showAllTest = new ShowAll();
-        System.out.println(showAllTest.execute(null));
+    public void executeUser() throws ControllerException {
+        ShowAll showAllTest = new ShowAll(libraryDAO.getBookDAO());
+        showAllTest.request(null);
+        System.out.println(showAllTest.execute());
     }
 }

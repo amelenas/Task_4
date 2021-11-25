@@ -1,20 +1,18 @@
 package by.stepanovichalena.library.service;
 
-import by.stepanovichalena.library.dao.BookDAO;
+import by.stepanovichalena.library.entity.Book;
 import by.stepanovichalena.library.service.exception.ServiceException;
-import by.stepanovichalena.library.service.validation.util.BookValidation;
+
+import java.util.Collection;
 
 public interface BookService {
 
-    String addBook(String request) throws ServiceException;
+    boolean addBook(Book book) throws ServiceException;
 
-    String find(String request);
+    public Collection<Book> find(Book book) throws ServiceException;
 
-    String showAll() throws ServiceException;
+    public Collection <Book> showAll() throws ServiceException;
 
-    String delete(String request) throws ServiceException;
+    public boolean delete(Book book) throws ServiceException;
 
-    void connectBookDAO(BookDAO bookDAO);
-
-    void setBookValidation(BookValidation bookValidation);
 }

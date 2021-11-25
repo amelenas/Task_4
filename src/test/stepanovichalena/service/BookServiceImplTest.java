@@ -1,123 +1,50 @@
 package test.stepanovichalena.service;
 
 import by.stepanovichalena.library.dao.BookDAO;
-import by.stepanovichalena.library.dao.exception.LibraryDAOException;
-import by.stepanovichalena.library.dao.factory.BookDAOFactory;
-import by.stepanovichalena.library.entity.AccessLevel;
-import by.stepanovichalena.library.entity.User;
+import by.stepanovichalena.library.dao.factory.impl.LibraryDAOFactory;
+import by.stepanovichalena.library.entity.Book;
 import by.stepanovichalena.library.service.BookService;
-import by.stepanovichalena.library.service.UserHolder;
-import by.stepanovichalena.library.service.factory.ServiceBookFactory;
 import by.stepanovichalena.library.service.exception.ServiceException;
-import by.stepanovichalena.library.source.BookSource;
-import by.stepanovichalena.library.source.impl.BookSourceImpl;
+import by.stepanovichalena.library.service.factory.ServiceLibraryFactory;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class BookServiceImplTest {
+    BookDAO bookDAO = LibraryDAOFactory.getInstance().getBookDAO();
+    BookService bookService = ServiceLibraryFactory.getInstance().getBookService(bookDAO);
 
     @Test
-    public void addBookAdmin() throws ServiceException, LibraryDAOException {
-        UserHolder.setUser(new User("Test2", "32165", AccessLevel.ADMIN));
-        BookSource bookSource = new BookSourceImpl();
-        BookDAO bookDAO = BookDAOFactory.getInstance();
-        bookDAO.connectBookSource(bookSource);
-        BookService bookService = ServiceBookFactory.getInstance();
-        bookService.connectBookDAO(bookDAO);
-        System.out.println(bookService.addBook("Book/book"));
+    public void addBook() throws ServiceException {
+        Assert.assertTrue(bookService.addBook(new Book(65, "BookServiceAddBook", "BookServiceAddBook")));
     }
 
     @Test
-    public void addBookUser() throws ServiceException, LibraryDAOException {
-        UserHolder.setUser(new User("Test", "123456", AccessLevel.USER));
-        BookSource bookSource = new BookSourceImpl();
-        BookDAO bookDAO = BookDAOFactory.getInstance();
-        bookDAO.connectBookSource(bookSource);
-        BookService bookService = ServiceBookFactory.getInstance();
-        bookService.connectBookDAO(bookDAO);
-        System.out.println(bookService.addBook("Book/book"));
+    public void addBookNull() throws ServiceException {
+        Assert.assertFalse(bookService.addBook(null));
     }
 
     @Test
-    public void addBookNull() throws ServiceException, LibraryDAOException {
-        UserHolder.setUser(new User("Test2", "32165", AccessLevel.ADMIN));
-        BookSource bookSource = new BookSourceImpl();
-        BookDAO bookDAO = BookDAOFactory.getInstance();
-        bookDAO.connectBookSource(bookSource);
-        BookService bookService = ServiceBookFactory.getInstance();
-        bookService.connectBookDAO(bookDAO);
-        System.out.println(bookService.addBook(null));
+    public void find() throws ServiceException {
+        System.out.println(bookService.find(new Book(0, "Jaws", "Peter Benchley")));
     }
 
     @Test
-    public void findByTitle() throws LibraryDAOException {
-        BookSource bookSource = new BookSourceImpl();
-        BookDAO bookDAO = BookDAOFactory.getInstance();
-        bookDAO.connectBookSource(bookSource);
-        BookService bookService = ServiceBookFactory.getInstance();
-        bookService.connectBookDAO(bookDAO);
-        System.out.println(bookService.find("Jaws/"));
-    }
-
-    @Test
-    public void findByAuthor() throws LibraryDAOException {
-        BookSource bookSource = new BookSourceImpl();
-        BookDAO bookDAO = BookDAOFactory.getInstance();
-        bookDAO.connectBookSource(bookSource);
-        BookService bookService = ServiceBookFactory.getInstance();
-        bookService.connectBookDAO(bookDAO);
-        System.out.println(bookService.find("/Peter Benchley"));
-    }
-
-    @Test
-    public void findByAuthorNull() throws LibraryDAOException {
-        BookSource bookSource = new BookSourceImpl();
-        BookDAO bookDAO = BookDAOFactory.getInstance();
-        bookDAO.connectBookSource(bookSource);
-        BookService bookService = ServiceBookFactory.getInstance();
-        bookService.connectBookDAO(bookDAO);
+    public void findByAuthorNull() throws ServiceException {
         System.out.println(bookService.find(null));
     }
 
     @Test
-    public void showAll() throws ServiceException, LibraryDAOException {
-        BookSource bookSource = new BookSourceImpl();
-        BookDAO bookDAO = BookDAOFactory.getInstance();
-        bookDAO.connectBookSource(bookSource);
-        BookService bookService = ServiceBookFactory.getInstance();
-        bookService.connectBookDAO(bookDAO);
+    public void showAll() throws ServiceException {
         System.out.println(bookService.showAll());
     }
 
     @Test
-    public void deleteAdmin() throws ServiceException, LibraryDAOException {
-        UserHolder.setUser(new User("Test2", "32165", AccessLevel.ADMIN));
-        BookSource bookSource = new BookSourceImpl();
-        BookDAO bookDAO = BookDAOFactory.getInstance();
-        bookDAO.connectBookSource(bookSource);
-        BookService bookService = ServiceBookFactory.getInstance();
-        bookService.connectBookDAO(bookDAO);
-        System.out.println(bookService.delete("Book/Book"));
+    public void delete() throws ServiceException {
+        Assert.assertTrue(bookService.delete(new Book(0, "BookServiceAddBook", "BookServiceAddBook")));
     }
 
     @Test
-    public void deleteAdminNull() throws ServiceException, LibraryDAOException {
-        UserHolder.setUser(new User("Test2", "32165", AccessLevel.ADMIN));
-        BookSource bookSource = new BookSourceImpl();
-        BookDAO bookDAO = BookDAOFactory.getInstance();
-        bookDAO.connectBookSource(bookSource);
-        BookService bookService = ServiceBookFactory.getInstance();
-        bookService.connectBookDAO(bookDAO);
-        System.out.println(bookService.delete(null));
-    }
-
-    @Test
-    public void deleteUser() throws ServiceException, LibraryDAOException {
-        UserHolder.setUser(new User("Test2", "32165", AccessLevel.USER));
-        BookSource bookSource = new BookSourceImpl();
-        BookDAO bookDAO = BookDAOFactory.getInstance();
-        bookDAO.connectBookSource(bookSource);
-        BookService bookService = ServiceBookFactory.getInstance();
-        bookService.connectBookDAO(bookDAO);
-        System.out.println(bookService.delete("Book/Book"));
+    public void deleteNull() throws ServiceException {
+        Assert.assertFalse(bookService.delete(null));
     }
 }

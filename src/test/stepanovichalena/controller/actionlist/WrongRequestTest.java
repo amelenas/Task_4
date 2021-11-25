@@ -1,20 +1,22 @@
 package test.stepanovichalena.controller.actionlist;
 
-import by.stepanovichalena.library.controller.actionlist.WrongRequest;
-import by.stepanovichalena.library.service.exception.ServiceException;
+import by.stepanovichalena.library.controller.exception.ControllerException;
+import by.stepanovichalena.library.controller.impl.actionlist.WrongRequest;
 import org.junit.Test;
 
 public class WrongRequestTest {
 
     @Test
-    public void execute() throws ServiceException {
+    public void execute() throws ControllerException {
         WrongRequest errorRequest = new WrongRequest();
-        System.out.println(errorRequest.execute("Error request/"));
+        errorRequest.request("bebebebe");
+        System.out.println(errorRequest.execute());
     }
 
     @Test
-    public void executeNull() throws ServiceException {
+    public void executeNull() throws ControllerException {
         WrongRequest errorRequest = new WrongRequest();
-        System.out.println(errorRequest.execute(null));
+        errorRequest.request("bebebebe");
+        System.out.println(errorRequest.execute());
     }
 }

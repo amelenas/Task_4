@@ -1,49 +1,45 @@
 package test.stepanovichalena.controller.actionlist;
 
-import by.stepanovichalena.library.controller.actionlist.AddBook;
-import by.stepanovichalena.library.controller.actionlist.LogIn;
-import by.stepanovichalena.library.service.exception.ServiceException;
+import by.stepanovichalena.library.controller.UserHolder;
+import by.stepanovichalena.library.controller.exception.ControllerException;
+import by.stepanovichalena.library.controller.impl.actionlist.book.AddBook;
+import by.stepanovichalena.library.dao.factory.impl.LibraryDAOFactory;
+import by.stepanovichalena.library.entity.AccessLevel;
+import by.stepanovichalena.library.entity.User;
 import org.junit.Test;
 
 public class AddBookTest {
+    LibraryDAOFactory libraryDAO = LibraryDAOFactory.getInstance();
 
     @Test
-    public void executeAdmin() throws ServiceException {
-        LogIn logIn = new LogIn();
-        System.out.println(logIn.execute("Kosm/36987"));
-        AddBook addBook = new AddBook();
-        System.out.println(addBook.execute("Alice in Wonderland/Lewis Carroll"));
+    public void executeAdmin() throws ControllerException {
+        UserHolder.setUser(new User("Goggi", "Goggi", AccessLevel.ADMIN));
+        AddBook addBook = new AddBook(libraryDAO.getBookDAO());
+        addBook.request("TestAddBookAdmin", "TestAddBook");
+        System.out.println(addBook.execute());
     }
 
     @Test
-    public void executeUser() throws ServiceException {
-        LogIn logIn = new LogIn();
-        System.out.println(logIn.execute("Goggi/Goggi"));
-        AddBook addBook = new AddBook();
-        System.out.println(addBook.execute("Alice in Wonderland/Lewis Carroll"));
+    public void executeUser() throws ControllerException {
+        UserHolder.setUser(new User("Kosm", "36987", AccessLevel.USER));
+        AddBook addBook = new AddBook(libraryDAO.getBookDAO());
+        addBook.request("TestAddBookUser", "TestAddBook");
+        System.out.println(addBook.execute());
     }
 
     @Test
-    public void titleNumber() throws ServiceException {
-        LogIn logIn = new LogIn();
-        System.out.println(logIn.execute("UserName/UserName"));
-        AddBook addBook = new AddBook();
-        System.out.println(addBook.execute("9999/Lewis C"));
+    public void titleNumber() throws ControllerException {
+        UserHolder.setUser(new User("Goggi", "Goggi", AccessLevel.ADMIN));
+        AddBook addBook = new AddBook(libraryDAO.getBookDAO());
+        addBook.request("999999", "TestAddBook");
+        System.out.println(addBook.execute());
     }
 
     @Test
-    public void titleNull() throws ServiceException {
-        LogIn logIn = new LogIn();
-        System.out.println(logIn.execute("UserName/UserName"));
-        AddBook addBook = new AddBook();
-        System.out.println(addBook.execute("null/null"));
-    }
-
-    @Test
-    public void titleNull2() throws ServiceException {
-        LogIn logIn = new LogIn();
-        System.out.println(logIn.execute("UserName/UserName"));
-        AddBook addBook = new AddBook();
-        System.out.println(addBook.execute(null));
+    public void titleNull() throws ControllerException {
+        UserHolder.setUser(new User("Goggi", "Goggi", AccessLevel.ADMIN));
+        AddBook addBook = new AddBook(libraryDAO.getBookDAO());
+        addBook.request(null, null);
+        System.out.println(addBook.execute());
     }
 }

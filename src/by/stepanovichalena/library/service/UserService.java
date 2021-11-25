@@ -1,16 +1,13 @@
 package by.stepanovichalena.library.service;
 
-import by.stepanovichalena.library.dao.UserDAO;
+import by.stepanovichalena.library.entity.User;
 import by.stepanovichalena.library.service.exception.ServiceException;
-import by.stepanovichalena.library.service.validation.util.UserValidation;
 
 public interface UserService {
 
-    String register(String request) throws ServiceException;
+     boolean register(User user) throws ServiceException;
 
-    String logIn(String request) throws ServiceException;
+     boolean logIn(User user) throws ServiceException;
 
-    void connectUserDAO(UserDAO userDAO);
-
-    void setUserValidation(UserValidation userValidation);
+    boolean isAccessLevelAdmin(User user);
 }
