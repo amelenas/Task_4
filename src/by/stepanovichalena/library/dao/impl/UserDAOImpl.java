@@ -1,6 +1,6 @@
 package by.stepanovichalena.library.dao.impl;
 
-import by.stepanovichalena.library.dao.source.BookSource;
+import by.stepanovichalena.library.dao.source.LibraryReader;
 import by.stepanovichalena.library.dao.source.exception.ReaderDAOException;
 import by.stepanovichalena.library.dao.source.reader.TXTReader;
 import by.stepanovichalena.library.entity.AccessLevel;
@@ -17,7 +17,7 @@ import java.util.TreeSet;
 public class UserDAOImpl implements UserDAO {
     private static final Logger LOGGER = LogManager.getLogger(UserDAOImpl.class);
     private static final String USERS_SOURCE_PATH = "users.txt.source.path";
-    private BookSource bookSource = new TXTReader();
+    private LibraryReader bookSource = new TXTReader();
     private static TreeSet<User> users;
     private String delimiter = "/";
 
@@ -41,7 +41,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public boolean logIn(User user) throws LibraryDAOException {
         download();
-        if (user == null || user.getName() == null){
+        if (user == null || user.getName() == null) {
             return false;
         }
         if (users.contains(user)) {
@@ -66,9 +66,36 @@ public class UserDAOImpl implements UserDAO {
         return result;
     }
 
+    @Override
+    public boolean changeUsersLevel(User user) throws LibraryDAOException {
+        download();
+        boolean result = false;
+        if (user == null || user.getName() == null) {
+            return false;
+        }
+        for (User u : users){
+            if (u.getName().equals(user.getName())){
+                u.setAccessLevel(user.getAccessLevel());
+                users.add(u);
+                upload();
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public boolean userSearch(User user) throws LibraryDAOException {
+        download();
+        if (user == null || user.getName() == null) {
+            return false;
+        }
+        return users.contains(user);
+    }
+
 
     private void upload() throws LibraryDAOException {
-        ArrayList <String> result = new ArrayList<>();
+        ArrayList<String> result = new ArrayList<>();
         try {
             for (User user : users) {
                 StringBuilder line = new StringBuilder();
@@ -76,7 +103,7 @@ public class UserDAOImpl implements UserDAO {
                 bookSource.write(USERS_SOURCE_PATH, result, false);
             }
         } catch (ReaderDAOException e) {
-
+            LOGGER.warn("Exception in UserLogicImpl while upload", e);
             throw new LibraryDAOException("Exception in UserLogicImpl while upload", e);
         }
     }
@@ -85,6 +112,7 @@ public class UserDAOImpl implements UserDAO {
         try {
             parseStringLines(bookSource.readAll(USERS_SOURCE_PATH));
         } catch (ReaderDAOException e) {
+            LOGGER.warn("Exception in UserLogicImpl while download", e);
             throw new LibraryDAOException("Exception in UserLogicImpl while download", e);
         }
     }
@@ -110,7 +138,7 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
-    public void setBookSource(BookSource bookSource) {
+    public void setBookSource(LibraryReader bookSource) {
         this.bookSource = bookSource;
     }
 

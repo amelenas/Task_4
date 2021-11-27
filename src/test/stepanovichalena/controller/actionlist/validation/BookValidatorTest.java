@@ -1,4 +1,4 @@
-package test.stepanovichalena.service.validation;
+package test.stepanovichalena.controller.actionlist.validation;
 
 import by.stepanovichalena.library.controller.exception.ControllerException;
 import by.stepanovichalena.library.controller.impl.actionlist.book.validator.impl.BookValidator;
@@ -39,5 +39,20 @@ public class BookValidatorTest {
     public void validateNameNegative() throws ControllerException {
         assertFalse(bookValidator.isAuthorsNameValid("Author32"));
     }
-
+    @Test
+    public void isIdValidPositive() throws ControllerException {
+        assertTrue(bookValidator.isIdValid("32"));
+    }
+    @Test
+    public void isIdValidNegative() throws ControllerException {
+        assertFalse(bookValidator.isIdValid("LLLL"));
+    }
+    @Test
+    public void isIdValidNumbersAndLetters() throws ControllerException {
+        assertFalse(bookValidator.isIdValid("32LLLL"));
+    }
+    @Test
+    public void isIdValidNumbersAndLetters2() throws ControllerException {
+        assertFalse(bookValidator.isIdValid("32 LLLL"));
+    }
 }

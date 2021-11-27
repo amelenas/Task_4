@@ -1,15 +1,15 @@
-package test.stepanovichalena.controller.actionlist;
+package test.stepanovichalena.controller.actionlist.book;
 
 import by.stepanovichalena.library.controller.UserHolder;
 import by.stepanovichalena.library.controller.exception.ControllerException;
 import by.stepanovichalena.library.controller.impl.actionlist.book.AddBook;
-import by.stepanovichalena.library.dao.factory.impl.LibraryDAOFactory;
+import by.stepanovichalena.library.dao.factory.impl.LibraryDAOFactoryImpl;
 import by.stepanovichalena.library.entity.AccessLevel;
 import by.stepanovichalena.library.entity.User;
 import org.junit.Test;
 
 public class AddBookTest {
-    LibraryDAOFactory libraryDAO = LibraryDAOFactory.getInstance();
+    LibraryDAOFactoryImpl libraryDAO = LibraryDAOFactoryImpl.getInstance();
 
     @Test
     public void executeAdmin() throws ControllerException {

@@ -2,19 +2,20 @@ package by.stepanovichalena.library.dao.factory.impl;
 
 import by.stepanovichalena.library.dao.BookDAO;
 import by.stepanovichalena.library.dao.UserDAO;
+import by.stepanovichalena.library.dao.factory.LibraryDAOFactory;
 import by.stepanovichalena.library.dao.impl.BookDAOImpl;
 import by.stepanovichalena.library.dao.impl.UserDAOImpl;
 
-public class LibraryDAOFactory implements by.stepanovichalena.library.dao.factory.LibraryDAOFactory {
+public class LibraryDAOFactoryImpl implements LibraryDAOFactory {
 
-    private LibraryDAOFactory() {
+    private LibraryDAOFactoryImpl() {
     }
 
     private static class BookDAOFactoryHolder {
-        public static final LibraryDAOFactory HOLDER_INSTANCE = new LibraryDAOFactory();
+        public static final LibraryDAOFactoryImpl HOLDER_INSTANCE = new LibraryDAOFactoryImpl();
     }
 
-    public static LibraryDAOFactory getInstance() {
+    public static LibraryDAOFactoryImpl getInstance() {
         return BookDAOFactoryHolder.HOLDER_INSTANCE;
     }
 

@@ -10,4 +10,8 @@ public interface UserDAO {
     boolean logIn(User user) throws LibraryDAOException;
 
     boolean isLevelAdmin(User user);
+
+    boolean changeUsersLevel(User user) throws LibraryDAOException;
+
+    boolean userSearch(User user) throws LibraryDAOException;
 }

@@ -2,7 +2,6 @@ package by.stepanovichalena.library.controller;
 
 import by.stepanovichalena.library.controller.exception.ControllerException;
 import by.stepanovichalena.library.controller.impl.Commands;
-import by.stepanovichalena.library.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,13 +11,11 @@ import java.util.List;
 public class Controller {
 
     private static final Logger LOGGER = LogManager.getLogger(Controller.class);
-
     private List<Command> commandsList;
+    private static Commands commands;
 
-       private static Commands commands;
-
-
-    public Controller(){}
+    public Controller() {
+    }
 
     public Controller(Commands commands) {
         this.commands = commands;
@@ -38,7 +35,7 @@ public class Controller {
         Controller.commands = commands;
     }
 
-    public String start(Actions actions, String ... request) throws ControllerException {
+    public String start(Actions actions, String... request) throws ControllerException {
         String response;
         Command command = commands.getCommand(actions);
         command.request(request);

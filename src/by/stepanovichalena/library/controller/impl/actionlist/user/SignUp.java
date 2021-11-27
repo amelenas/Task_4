@@ -11,13 +11,8 @@ import by.stepanovichalena.library.service.exception.ServiceException;
 import by.stepanovichalena.library.service.UserService;
 import by.stepanovichalena.library.service.factory.ServiceLibraryFactory;
 import by.stepanovichalena.library.controller.impl.actionlist.user.validator.UserValidation;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class SignUp implements Command {
-
-    private static final Logger LOGGER = LogManager.getLogger(SignUp.class);
-
     private static final String SIGN_UP_OK = " Successfully registered ";
     private static final String SIGN_UP_ERROR = " Inputted values is invalid ";
     private UserValidation userValidation = new UserValidator();

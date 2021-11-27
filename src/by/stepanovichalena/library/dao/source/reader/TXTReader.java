@@ -1,6 +1,6 @@
 package by.stepanovichalena.library.dao.source.reader;
 
-import by.stepanovichalena.library.dao.source.BookSource;
+import by.stepanovichalena.library.dao.source.LibraryReader;
 import by.stepanovichalena.library.dao.source.exception.ReaderDAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,7 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
-public class TXTReader implements BookSource {
+public class TXTReader implements LibraryReader {
     private static final Logger LOGGER = LogManager.getLogger(TXTReader.class);
     private static final Properties PROPERTIES;
     private static String PROPERTY_PATH = "out/production/Task_4/resource/application.properties";

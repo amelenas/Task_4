@@ -3,10 +3,8 @@ package by.stepanovichalena.library.controller.impl;
 import by.stepanovichalena.library.controller.Actions;
 import by.stepanovichalena.library.controller.Command;
 import by.stepanovichalena.library.controller.impl.actionlist.WrongRequest;
-import by.stepanovichalena.library.controller.impl.actionlist.book.DeleteBook;
-import by.stepanovichalena.library.controller.impl.actionlist.book.AddBook;
-import by.stepanovichalena.library.controller.impl.actionlist.book.FindBook;
-import by.stepanovichalena.library.controller.impl.actionlist.book.ShowAll;
+import by.stepanovichalena.library.controller.impl.actionlist.book.*;
+import by.stepanovichalena.library.controller.impl.actionlist.user.ChangeUserLevel;
 import by.stepanovichalena.library.controller.impl.actionlist.user.LogIn;
 import by.stepanovichalena.library.controller.impl.actionlist.user.SignUp;
 import by.stepanovichalena.library.dao.BookDAO;
@@ -29,9 +27,13 @@ public class Commands {
         {
             commands.put(Actions.SIGN_UP, new SignUp(userDAO));
             commands.put(Actions.LOG_IN, new LogIn(userDAO));
+            commands.put(Actions.CHANGE_USER_LEVEL, new ChangeUserLevel(userDAO));
             commands.put(Actions.ADD_BOOK, new AddBook(bookDAO));
             commands.put(Actions.FIND_BOOK, new FindBook(bookDAO));
+            commands.put(Actions.FIND_BOOK_BY_TITLE, new FindBookByTitle(bookDAO));
+            commands.put(Actions.FIND_BOOK_BY_AUTHOR, new FindBookByAuthor(bookDAO));
             commands.put(Actions.DELETE_BOOK, new DeleteBook(bookDAO));
+            commands.put(Actions.DELETE_BOOK_BY_ID, new DeleteBookById(bookDAO));
             commands.put(Actions.SHOW_ALL, new ShowAll(bookDAO));
             commands.put(Actions.WRONG_REQUEST, new WrongRequest());
         }

@@ -11,11 +11,8 @@ import by.stepanovichalena.library.entity.Book;
 import by.stepanovichalena.library.service.exception.ServiceException;
 import by.stepanovichalena.library.service.factory.ServiceLibraryFactory;
 import by.stepanovichalena.library.service.BookService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class AddBook implements Command {
-    private static final Logger LOGGER = LogManager.getLogger(AddBook.class);
     private static final String ADDED = " added ";
     private static final String NOT_ADDED = " book not added ";
     private static final String INCORRECT_ACCESS_LEVEL = " incorrect access level ";
@@ -29,25 +26,24 @@ public class AddBook implements Command {
 
     @Override
     public String execute() throws ControllerException {
-        String title = requestParameters[0];
-        String authorsName = requestParameters[1];
+        boolean result = false;
         StringBuilder response = new StringBuilder();
-        if (!isAccessLevelAdmin()) {
-            response.append(INCORRECT_ACCESS_LEVEL).append(NOT_ADDED);
-        } else {
-            try {
-                bookValidation.isBookDataValid(title, authorsName);
-            } catch (ControllerException e) {
-                response.append(e.getMessage()).append(NOT_ADDED);
+        Book book;
+        if (requestParameters != null) {
+            String title = requestParameters[0];
+            String authorsName = requestParameters[1];
+            if (!isAccessLevelAdmin()) {
+                response.append(INCORRECT_ACCESS_LEVEL);
+            } else {
+                try {
+                    bookValidation.isBookDataValid(title, authorsName);
+                    book = new Book(-1, title, authorsName);
+                    result = bookService.addBook(book);
+                } catch (ControllerException | ServiceException e) {
+                    response.append(e.getMessage());
+                }
             }
-            Book book = new Book(-1, title, authorsName);
-            try {
-                bookService.addBook(book);
-            } catch (ServiceException e) {
-                LOGGER.warn("Exception while adding a book", e);
-                throw new ControllerException("Exception while adding a book");
-            }
-            response.append(book.getTitle()).append(" ").append(book.getAuthorsName()).append(ADDED);
+            response.append(result ? ADDED : NOT_ADDED);
         }
         return response.toString();
     }

@@ -8,5 +8,7 @@ public interface BookValidation {
 
     boolean isAuthorsNameValid(String authorsName) throws ControllerException;
 
+    boolean isIdValid(String id) throws ControllerException;
+
     boolean isTitleValid(String title) throws ControllerException;
 }

@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.Collection;
 
 public class ShowAll implements Command {
-    private static final Logger LOGGER = LogManager.getLogger(AddBook.class);
+    private static final Logger LOGGER = LogManager.getLogger(ShowAll.class);
     private String delimiter = "/";
     private BookService bookService;
     private String[] requestParameters;

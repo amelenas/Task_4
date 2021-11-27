@@ -32,7 +32,6 @@ public class UserServiceImpl implements UserService {
         return result;
     }
 
-
     @Override
     public boolean logIn(User user) throws ServiceException {
         try {
@@ -43,10 +42,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isAccessLevelAdmin(User user) {
-
-        return userDAO.isLevelAdmin(user);
-
+    public boolean findUser(User user) throws ServiceException {
+        boolean result;
+        try {
+            result = userDAO.userSearch(user);
+        } catch (LibraryDAOException e) {
+            throw new ServiceException("Exception in UserServiceImpl while searching user", e);
+        }
+        return result;
     }
 
+    @Override
+    public boolean isAccessLevelAdmin(User user) {
+        return userDAO.isLevelAdmin(user);
+    }
+
+    @Override
+    public boolean changeAccessLevel(User user) throws ServiceException {
+        boolean result;
+        try {
+            result = userDAO.changeUsersLevel(user);
+        } catch (LibraryDAOException e) {
+            throw new ServiceException("Exception in UserServiceImpl while changing access user's level", e);
+        }
+        return result;
+    }
 }

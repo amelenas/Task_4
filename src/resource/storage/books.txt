@@ -7,8 +7,9 @@
 7/Jaws/Peter Benchley
 8/Hercules Serpents Shadows/Timothy Boggs
 9/Mrs. Dalloway/Virginia Woolf
-11/Call of the Wild/Jack London
-12/Woman in Black/Susan Hill
+10/Call of the Wild/Jack London
+11/Woman in Black/Susan Hill
+12/Alice in Wonderland/Lewis Carroll
 13/Mary Poppins/Pamela Lyndon Travers
 14/Sherlock Holmes. The Sign of the Four/Sir Arthur Conan Doyle
 15/Persuasion/Jane Austen
@@ -19,4 +20,3 @@
 20/To Kill A Mockingbird/Harper Lee
 21/The Lord Of The Rings/J. R. R. Tolkien
 22/Lolita/Vladimir Nabokov
-23/Alice in Wonderland/Lewis Carroll

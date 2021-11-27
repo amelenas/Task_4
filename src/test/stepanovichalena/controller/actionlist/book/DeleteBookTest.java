@@ -1,14 +1,13 @@
-package test.stepanovichalena.controller.actionlist;
+package test.stepanovichalena.controller.actionlist.book;
 import by.stepanovichalena.library.controller.UserHolder;
 import by.stepanovichalena.library.controller.impl.actionlist.book.DeleteBook;
-import by.stepanovichalena.library.dao.factory.impl.LibraryDAOFactory;
+import by.stepanovichalena.library.dao.factory.impl.LibraryDAOFactoryImpl;
 import by.stepanovichalena.library.entity.AccessLevel;
 import by.stepanovichalena.library.entity.User;
-import by.stepanovichalena.library.service.exception.ServiceException;
 import org.junit.Test;
 
 public class DeleteBookTest {
-    LibraryDAOFactory libraryDAO = LibraryDAOFactory.getInstance();
+    LibraryDAOFactoryImpl libraryDAO = LibraryDAOFactoryImpl.getInstance();
 
     @Test
     public void executeAdmin() {

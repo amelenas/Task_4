@@ -6,4 +6,6 @@ public interface UserValidation {
 
     boolean isUserDataValid(String UserName, String password) throws ControllerException;
 
+    boolean isUserNameValid(String userName) throws ControllerException;
+
 }

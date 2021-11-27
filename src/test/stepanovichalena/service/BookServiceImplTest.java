@@ -1,7 +1,7 @@
 package test.stepanovichalena.service;
 
 import by.stepanovichalena.library.dao.BookDAO;
-import by.stepanovichalena.library.dao.factory.impl.LibraryDAOFactory;
+import by.stepanovichalena.library.dao.factory.impl.LibraryDAOFactoryImpl;
 import by.stepanovichalena.library.entity.Book;
 import by.stepanovichalena.library.service.BookService;
 import by.stepanovichalena.library.service.exception.ServiceException;
@@ -10,7 +10,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class BookServiceImplTest {
-    BookDAO bookDAO = LibraryDAOFactory.getInstance().getBookDAO();
+    BookDAO bookDAO = LibraryDAOFactoryImpl.getInstance().getBookDAO();
     BookService bookService = ServiceLibraryFactory.getInstance().getBookService(bookDAO);
 
     @Test
@@ -29,8 +29,28 @@ public class BookServiceImplTest {
     }
 
     @Test
-    public void findByAuthorNull() throws ServiceException {
+    public void findNull() throws ServiceException {
         System.out.println(bookService.find(null));
+    }
+
+    @Test
+    public void findByAuthor() throws ServiceException {
+        System.out.println(bookService.findByAuthor( "Peter Benchley"));
+    }
+
+    @Test
+    public void findByAuthorNull() throws ServiceException {
+        System.out.println(bookService.findByAuthor(null));
+    }
+
+    @Test
+    public void findByTitle() throws ServiceException {
+        System.out.println(bookService.findByTitle( "Jaws"));
+    }
+
+    @Test
+    public void findByTitleNull() throws ServiceException {
+        System.out.println(bookService.findByAuthor(null));
     }
 
     @Test
@@ -46,5 +66,15 @@ public class BookServiceImplTest {
     @Test
     public void deleteNull() throws ServiceException {
         Assert.assertFalse(bookService.delete(null));
+    }
+
+    @Test
+    public void deleteById() throws ServiceException {
+        Assert.assertTrue(bookService.deleteBookById(10));
+    }
+
+    @Test
+    public void deleteByIdNull() throws ServiceException {
+        Assert.assertFalse(bookService.deleteBookById(null));
     }
 }

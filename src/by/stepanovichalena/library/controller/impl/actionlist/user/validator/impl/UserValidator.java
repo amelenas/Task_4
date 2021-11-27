@@ -20,6 +20,15 @@ public class UserValidator implements UserValidation {
           return isDataValid(NAME_PATTERN, userName) && isDataValid(PASSWORD_PATTERN, password);
     }
 
+    @Override
+    public boolean isUserNameValid(String userName) throws ControllerException {
+        if (userName == null) {
+            throw new ControllerException("User name is null");
+        }
+        return isDataValid(NAME_PATTERN, userName);
+
+    }
+
     private boolean isDataValid(String pattern, String arg) {
         Pattern patternCompile = Pattern.compile(pattern);
         Matcher matcher = patternCompile.matcher(arg);

@@ -12,11 +12,11 @@ import java.util.Properties;
 
 public class TXTReaderTest {
     private static final String BOOKS_SOURCE_PATH = "books.txt.source.path";
-    private static String PROPERTY_PATH = "out/production/Task_4/resource/application.properties";
     Properties properties;
 
     @Before
     public void downloadProperties() throws IOException {
+        String PROPERTY_PATH = "out/production/Task_4/resource/application.properties";
         properties = new Properties();
         properties.load(new FileInputStream(PROPERTY_PATH));
     }

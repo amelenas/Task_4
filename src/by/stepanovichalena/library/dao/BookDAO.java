@@ -2,8 +2,6 @@ package by.stepanovichalena.library.dao;
 
 import by.stepanovichalena.library.dao.exception.LibraryDAOException;
 import by.stepanovichalena.library.entity.Book;
-import by.stepanovichalena.library.entity.AccessLevel;
-import by.stepanovichalena.library.dao.source.BookSource;
 
 import java.util.Collection;
 
@@ -15,6 +13,12 @@ public interface BookDAO {
 
     boolean delete(Book book) throws LibraryDAOException;
 
+    boolean deleteById(Integer id) throws LibraryDAOException;
+
     Collection<Book> find(Book book) throws LibraryDAOException;
+
+    Collection<Book> findByAuthorBook(String author) throws LibraryDAOException;
+
+    Collection<Book> findByTitle(String title) throws LibraryDAOException;
 
 }

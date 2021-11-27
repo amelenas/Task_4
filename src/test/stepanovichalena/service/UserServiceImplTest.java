@@ -1,7 +1,7 @@
 package test.stepanovichalena.service;
 
 import by.stepanovichalena.library.dao.UserDAO;
-import by.stepanovichalena.library.dao.factory.impl.LibraryDAOFactory;
+import by.stepanovichalena.library.dao.factory.impl.LibraryDAOFactoryImpl;
 import by.stepanovichalena.library.entity.AccessLevel;
 import by.stepanovichalena.library.entity.User;
 import by.stepanovichalena.library.service.UserService;
@@ -12,7 +12,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class UserServiceImplTest {
-    UserDAO userDAO = LibraryDAOFactory.getInstance().getUserDAO();
+    UserDAO userDAO = LibraryDAOFactoryImpl.getInstance().getUserDAO();
     UserService userService = ServiceLibraryFactory.getInstance().getUserService(userDAO);
 
     @Test
@@ -33,5 +33,16 @@ public class UserServiceImplTest {
     @Test
     public void logInNull() throws ServiceException {
         assertFalse(userService.logIn(null));
+    }
+
+
+    @Test
+    public void changeAccessLevel() throws ServiceException {
+        assertTrue(userService.changeAccessLevel(new User("ServiceUserTest2","", AccessLevel.ADMIN)));
+    }
+
+    @Test
+    public void changeAccessLevelNull() throws ServiceException {
+        assertFalse(userService.changeAccessLevel(null));
     }
 }

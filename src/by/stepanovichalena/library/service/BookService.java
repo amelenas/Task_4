@@ -9,10 +9,16 @@ public interface BookService {
 
     boolean addBook(Book book) throws ServiceException;
 
-    public Collection<Book> find(Book book) throws ServiceException;
+    Collection<Book> find(Book book) throws ServiceException;
 
-    public Collection <Book> showAll() throws ServiceException;
+    Collection<Book> findByAuthor(String authorsName) throws ServiceException;
 
-    public boolean delete(Book book) throws ServiceException;
+    Collection<Book> findByTitle(String title) throws ServiceException;
+
+    Collection <Book> showAll() throws ServiceException;
+
+    boolean delete(Book book) throws ServiceException;
+
+    boolean deleteBookById(Integer id) throws ServiceException;
 
 }

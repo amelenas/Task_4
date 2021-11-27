@@ -1,12 +1,12 @@
-package test.stepanovichalena.controller.actionlist;
+package test.stepanovichalena.controller.actionlist.book;
 
 import by.stepanovichalena.library.controller.exception.ControllerException;
 import by.stepanovichalena.library.controller.impl.actionlist.book.ShowAll;
-import by.stepanovichalena.library.dao.factory.impl.LibraryDAOFactory;
+import by.stepanovichalena.library.dao.factory.impl.LibraryDAOFactoryImpl;
 import org.junit.Test;
 
 public class ShowAllTest {
-    LibraryDAOFactory libraryDAO = LibraryDAOFactory.getInstance();
+    LibraryDAOFactoryImpl libraryDAO = LibraryDAOFactoryImpl.getInstance();
 
     @Test
     public void executePositive() throws ControllerException {

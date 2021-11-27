@@ -1,12 +1,12 @@
-package test.stepanovichalena.controller.actionlist;
+package test.stepanovichalena.controller.actionlist.user;
 
 import by.stepanovichalena.library.controller.impl.actionlist.user.LogIn;
-import by.stepanovichalena.library.dao.factory.impl.LibraryDAOFactory;
+import by.stepanovichalena.library.dao.factory.impl.LibraryDAOFactoryImpl;
 import by.stepanovichalena.library.service.exception.ServiceException;
 import org.junit.Test;
 
 public class LogInTest {
-    LibraryDAOFactory libraryDAO = LibraryDAOFactory.getInstance();
+    LibraryDAOFactoryImpl libraryDAO = LibraryDAOFactoryImpl.getInstance();
     @Test
     public void execute() throws ServiceException {
         LogIn logIn = new LogIn(libraryDAO.getUserDAO());

@@ -1,6 +1,6 @@
 package by.stepanovichalena.library.dao.impl;
 
-import by.stepanovichalena.library.dao.source.BookSource;
+import by.stepanovichalena.library.dao.source.LibraryReader;
 import by.stepanovichalena.library.dao.source.exception.ReaderDAOException;
 import by.stepanovichalena.library.dao.BookDAO;
 import by.stepanovichalena.library.dao.exception.LibraryDAOException;
@@ -15,7 +15,7 @@ public class BookDAOImpl implements BookDAO {
     private static final Logger LOGGER = LogManager.getLogger(BookDAOImpl.class);
     private static final String BOOKS_SOURCE_PATH = "books.txt.source.path";
     private String delimiter = "/";
-    private BookSource bookSource = new TXTReader();
+    private LibraryReader bookSource = new TXTReader();
     private Map<Integer, Book> books;
 
 
@@ -51,6 +51,17 @@ public class BookDAOImpl implements BookDAO {
     }
 
     @Override
+    public boolean deleteById(Integer id) throws LibraryDAOException {
+        download();
+        if (id != null && books.size() >= id) {
+            books.remove(id);
+            upload();
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public Collection<Book> update() throws LibraryDAOException {
         download();
         return books.values();
@@ -59,25 +70,42 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public Collection<Book> find(Book book) throws LibraryDAOException {
         download();
+        nullCheck(book);
         Set<Book> resultByAuthor = new HashSet<>();
-        if (book != null) {
-            if (book.getTitle() != null || book.getAuthorsName() != null) {
-                String title = book.getTitle();
-                String author = book.getAuthorsName();
-                Set<Book> resultByTitle = (Set<Book>) findLibByTitle(title);
-                resultByAuthor = (Set<Book>) findByAuthor(author);
-                resultByAuthor.addAll(resultByTitle);
-            }
+        if (book.getTitle() != null || book.getAuthorsName() != null) {
+            String title = book.getTitle();
+            String author = book.getAuthorsName();
+            Set<Book> resultByTitle = (Set<Book>) findLibByTitle(title);
+            resultByAuthor = (Set<Book>) findByAuthor(author);
+            resultByAuthor.addAll(resultByTitle);
         }
         return resultByAuthor;
+    }
+
+    @Override
+    public Collection<Book> findByAuthorBook(String authorsName) throws LibraryDAOException {
+        download();
+        Set<Book> resultByAuthor = new HashSet<>();
+        if (authorsName != null) {
+            resultByAuthor = (Set<Book>) findByAuthor(authorsName);
+        }
+        return resultByAuthor;
+    }
+
+    @Override
+    public Collection<Book> findByTitle(String title) throws LibraryDAOException {
+        download();
+        Set<Book> resultByTitle = new HashSet<>();
+        if (title != null) {
+            resultByTitle = (Set<Book>) findLibByTitle(title);
+        }
+        return resultByTitle;
     }
 
     private Collection<Book> findLibByTitle(String title) throws LibraryDAOException {
         Set<Book> result = new HashSet<>();
         for (Book book : books.values()) {
-            if (book == null &&
-                    book.getTitle() == null &&
-                    book.getAuthorsName() == null) {
+            if (book == null) {
                 throw new LibraryDAOException("Book data is null");
             }
             if (book.getTitle().length() > 0 && book.getTitle().contains(title)) {
@@ -106,7 +134,7 @@ public class BookDAOImpl implements BookDAO {
     }
 
     private void upload() throws LibraryDAOException {
-        ArrayList<String> result = new ArrayList();
+        Collection<String> result = new ArrayList<>();
         try {
             for (Book book : books.values()) {
                 StringBuilder line = new StringBuilder();
@@ -147,7 +175,7 @@ public class BookDAOImpl implements BookDAO {
         return book;
     }
 
-    public void setBookSource(BookSource bookSource) {
+    public void setBookSource(LibraryReader bookSource) {
         this.bookSource = bookSource;
     }
 

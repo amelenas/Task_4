@@ -42,6 +42,27 @@ public class BookServiceImpl implements BookService {
         try {
             return bookDAO.find(book);
         } catch (LibraryDAOException e) {
+            LOGGER.error("Exception in BookServiceImpl while searching file", e);
+            throw new ServiceException("Exception in BookServiceImpl while searching file", e);
+        }
+    }
+
+    @Override
+    public Collection<Book> findByAuthor(String authorsName) throws ServiceException {
+        try {
+            return bookDAO.findByAuthorBook(authorsName);
+        } catch (LibraryDAOException e) {
+            LOGGER.error("Exception in BookServiceImpl while searching file", e);
+            throw new ServiceException("Exception in BookServiceImpl while searching file", e);
+        }
+    }
+
+    @Override
+    public Collection<Book> findByTitle(String title) throws ServiceException {
+        try {
+            return bookDAO.findByTitle(title);
+        } catch (LibraryDAOException e) {
+            LOGGER.error("Exception in BookServiceImpl while searching file", e);
             throw new ServiceException("Exception in BookServiceImpl while searching file", e);
         }
     }
@@ -63,6 +84,19 @@ public class BookServiceImpl implements BookService {
         boolean result;
         try {
             result = bookDAO.delete(book);
+        } catch (LibraryDAOException e) {
+            LOGGER.error("Exception in BookServiceImpl while deleting the book ", e);
+            throw new ServiceException("Exception in BookServiceImpl while deleting the book ", e);
+        }
+        return result;
+    }
+
+    @Override
+    public boolean deleteBookById(Integer id) throws ServiceException {
+        boolean result;
+        try {
+            result = bookDAO.deleteById(id);
+            LOGGER.info(result);
         } catch (LibraryDAOException e) {
             LOGGER.error("Exception in BookServiceImpl while deleting the book ", e);
             throw new ServiceException("Exception in BookServiceImpl while deleting the book ", e);

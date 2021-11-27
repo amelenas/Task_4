@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 public class BookValidator implements BookValidation {
     private final static String NAME_PATTERN = "^[a-zA-Z'][a-zA-Z-' ]+[a-zA-Z']?$";
     private final static String TITLE_PATTERN = "(.{1,30})";
+    private final static String ID_PATTERN = "\\d+";
 
     @Override
     public boolean isTitleValid(String title) throws ControllerException {
@@ -26,6 +27,14 @@ public class BookValidator implements BookValidation {
             throw new ControllerException("The data is empty");
         }
         return isDataValid(NAME_PATTERN, authorsName);
+    }
+
+    @Override
+    public boolean isIdValid(String id) throws ControllerException {
+        if (isEmpty(id)) {
+            throw new ControllerException("The data is empty");
+        }
+        return isDataValid(ID_PATTERN, id);
     }
 
     @Override
