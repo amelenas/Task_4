@@ -33,13 +33,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean logIn(User user) throws ServiceException {
+    public User logIn(User user) throws ServiceException {
         try {
             return userDAO.logIn(user);
         } catch (LibraryDAOException e) {
             throw new ServiceException("Exception in UserServiceImpl while logging in", e);
         }
     }
+
 
     @Override
     public boolean findUser(User user) throws ServiceException {
@@ -53,15 +54,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isAccessLevelAdmin(User user) {
-        return userDAO.isLevelAdmin(user);
-    }
-
-    @Override
     public boolean changeAccessLevel(User user) throws ServiceException {
         boolean result;
         try {
-            result = userDAO.changeUsersLevel(user);
+            result = userDAO.changeUserLevel(user);
         } catch (LibraryDAOException e) {
             throw new ServiceException("Exception in UserServiceImpl while changing access user's level", e);
         }

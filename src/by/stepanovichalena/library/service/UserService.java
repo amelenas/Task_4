@@ -7,11 +7,9 @@ public interface UserService {
 
     boolean register(User user) throws ServiceException;
 
-    boolean logIn(User user) throws ServiceException;
+    User logIn(User user) throws ServiceException;
 
     boolean findUser(User user) throws ServiceException;
-
-    boolean isAccessLevelAdmin(User user);
 
     boolean changeAccessLevel(User user) throws ServiceException;
 }

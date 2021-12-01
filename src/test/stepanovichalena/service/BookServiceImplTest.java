@@ -5,13 +5,13 @@ import by.stepanovichalena.library.dao.factory.impl.LibraryDAOFactoryImpl;
 import by.stepanovichalena.library.entity.Book;
 import by.stepanovichalena.library.service.BookService;
 import by.stepanovichalena.library.service.exception.ServiceException;
-import by.stepanovichalena.library.service.factory.ServiceLibraryFactory;
+import by.stepanovichalena.library.service.factory.ServiceLibraryFactoryImpl;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class BookServiceImplTest {
     BookDAO bookDAO = LibraryDAOFactoryImpl.getInstance().getBookDAO();
-    BookService bookService = ServiceLibraryFactory.getInstance().getBookService(bookDAO);
+    BookService bookService = ServiceLibraryFactoryImpl.getInstance().getBookService(bookDAO);
 
     @Test
     public void addBook() throws ServiceException {

@@ -6,7 +6,7 @@ import by.stepanovichalena.library.controller.impl.actionlist.book.validator.Boo
 import by.stepanovichalena.library.controller.impl.actionlist.book.validator.impl.BookValidator;
 import by.stepanovichalena.library.dao.BookDAO;
 import by.stepanovichalena.library.entity.Book;
-import by.stepanovichalena.library.service.factory.ServiceLibraryFactory;
+import by.stepanovichalena.library.service.factory.ServiceLibraryFactoryImpl;
 import by.stepanovichalena.library.service.exception.ServiceException;
 import by.stepanovichalena.library.service.BookService;
 import org.apache.logging.log4j.LogManager;
@@ -23,7 +23,7 @@ public class FindBook implements Command {
     private String[] requestParameters;
 
     public FindBook(BookDAO bookDAO) {
-        this.bookService = ServiceLibraryFactory.getInstance().getBookService(bookDAO);
+        this.bookService = ServiceLibraryFactoryImpl.getInstance().getBookService(bookDAO);
     }
 
     @Override
@@ -74,5 +74,7 @@ public class FindBook implements Command {
         this.bookValidation = bookValidation;
     }
 
-
+    public void setBookService(BookService bookService) {
+        this.bookService = bookService;
+    }
 }

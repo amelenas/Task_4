@@ -14,4 +14,8 @@ public interface LibraryDAOFactory {
     UserDAO getUserDAO();
 
     BookDAO getBookDAO();
+
+    void setUserDAO(UserDAO userDAO);
+
+    void setBookDAO(BookDAO bookDAO);
 }

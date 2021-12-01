@@ -10,13 +10,13 @@ import java.util.regex.Pattern;
 
 public class BookValidator implements BookValidation {
     private final static String NAME_PATTERN = "^[a-zA-Z'][a-zA-Z-' ]+[a-zA-Z']?$";
-    private final static String TITLE_PATTERN = "(.{1,30})";
+    private final static String TITLE_PATTERN = "(.{1,50})";
     private final static String ID_PATTERN = "\\d+";
 
     @Override
     public boolean isTitleValid(String title) throws ControllerException {
         if (isEmpty(title)) {
-            throw new ControllerException("The data is empty");
+           return false;
         }
         return isDataValid(TITLE_PATTERN, title);
     }
@@ -24,7 +24,7 @@ public class BookValidator implements BookValidation {
     @Override
     public boolean isAuthorsNameValid(String authorsName) throws ControllerException {
         if (isEmpty(authorsName)) {
-            throw new ControllerException("The data is empty");
+            return false;
         }
         return isDataValid(NAME_PATTERN, authorsName);
     }
@@ -32,7 +32,7 @@ public class BookValidator implements BookValidation {
     @Override
     public boolean isIdValid(String id) throws ControllerException {
         if (isEmpty(id)) {
-            throw new ControllerException("The data is empty");
+            return false;
         }
         return isDataValid(ID_PATTERN, id);
     }
@@ -40,7 +40,7 @@ public class BookValidator implements BookValidation {
     @Override
     public boolean isBookDataValid(String title, String authorsName) throws ControllerException {
         if (isEmpty(authorsName) && isEmpty(title)) {
-            throw new ControllerException("The data is empty");
+            return false;
         }
         return isDataValid(NAME_PATTERN, authorsName) && isDataValid(TITLE_PATTERN, title);
     }

@@ -6,7 +6,7 @@ import by.stepanovichalena.library.dao.BookDAO;
 import by.stepanovichalena.library.entity.Book;
 import by.stepanovichalena.library.service.exception.ServiceException;
 import by.stepanovichalena.library.service.BookService;
-import by.stepanovichalena.library.service.factory.ServiceLibraryFactory;
+import by.stepanovichalena.library.service.factory.ServiceLibraryFactoryImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,11 +15,12 @@ import java.util.Collection;
 public class ShowAll implements Command {
     private static final Logger LOGGER = LogManager.getLogger(ShowAll.class);
     private String delimiter = "/";
+
     private BookService bookService;
     private String[] requestParameters;
 
     public ShowAll(BookDAO bookDAO) {
-        this.bookService = ServiceLibraryFactory.getInstance().getBookService(bookDAO);
+        this.bookService = ServiceLibraryFactoryImpl.getInstance().getBookService(bookDAO);
 
     }
 
@@ -29,7 +30,7 @@ public class ShowAll implements Command {
     @Override
     public String execute() throws ControllerException {
         StringBuilder result = new StringBuilder();
-        Collection<Book> books = null;
+        Collection<Book> books;
         try {
             books = bookService.showAll();
         } catch (ServiceException e) {
@@ -50,4 +51,9 @@ public class ShowAll implements Command {
     public void setDelimiter(String delimiter) {
         this.delimiter = delimiter;
     }
+
+    public void setBookService(BookService bookService) {
+        this.bookService = bookService;
+    }
+
 }

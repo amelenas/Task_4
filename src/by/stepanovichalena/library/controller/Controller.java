@@ -12,27 +12,26 @@ public class Controller {
 
     private static final Logger LOGGER = LogManager.getLogger(Controller.class);
     private List<Command> commandsList;
-    private static Commands commands;
+    private Commands commands;
 
     public Controller() {
     }
 
     public Controller(Commands commands) {
         this.commands = commands;
-        {
-            commandsList = new ArrayList<>();
-            commandsList.add(commands.getCommand(Actions.SIGN_UP));
-            commandsList.add(commands.getCommand(Actions.LOG_IN));
-            commandsList.add(commands.getCommand(Actions.ADD_BOOK));
-            commandsList.add(commands.getCommand(Actions.FIND_BOOK));
-            commandsList.add(commands.getCommand(Actions.DELETE_BOOK));
-            commandsList.add(commands.getCommand(Actions.SHOW_ALL));
-            commandsList.add(commands.getCommand(Actions.WRONG_REQUEST));
-        }
+        commandsList = new ArrayList<>();
+        commandsList.add(commands.getCommand(Actions.SIGN_UP));
+        commandsList.add(commands.getCommand(Actions.LOG_IN));
+        commandsList.add(commands.getCommand(Actions.ADD_BOOK));
+        commandsList.add(commands.getCommand(Actions.FIND_BOOK));
+        commandsList.add(commands.getCommand(Actions.DELETE_BOOK));
+        commandsList.add(commands.getCommand(Actions.SHOW_ALL));
+        commandsList.add(commands.getCommand(Actions.WRONG_REQUEST));
+
     }
 
-    public static void setCommands(Commands commands) {
-        Controller.commands = commands;
+    public void setCommands(Commands commands) {
+        this.commands = commands;
     }
 
     public String start(Actions actions, String... request) throws ControllerException {

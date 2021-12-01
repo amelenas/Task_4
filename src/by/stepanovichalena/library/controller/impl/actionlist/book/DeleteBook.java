@@ -9,7 +9,7 @@ import by.stepanovichalena.library.dao.BookDAO;
 import by.stepanovichalena.library.entity.AccessLevel;
 import by.stepanovichalena.library.entity.Book;
 import by.stepanovichalena.library.service.exception.ServiceException;
-import by.stepanovichalena.library.service.factory.ServiceLibraryFactory;
+import by.stepanovichalena.library.service.factory.ServiceLibraryFactoryImpl;
 import by.stepanovichalena.library.service.BookService;
 
 public class DeleteBook implements Command {
@@ -21,7 +21,7 @@ public class DeleteBook implements Command {
     private String[] requestParameters;
 
     public DeleteBook(BookDAO bookDAO) {
-        this.bookService = ServiceLibraryFactory.getInstance().getBookService(bookDAO);
+        this.bookService = ServiceLibraryFactoryImpl.getInstance().getBookService(bookDAO);
     }
 
     @Override
@@ -56,5 +56,10 @@ public class DeleteBook implements Command {
 
     public void setBookValidation(BookValidation bookValidation) {
         this.bookValidation = bookValidation;
+    }
+
+
+    public void setBookService(BookService bookService) {
+        this.bookService = bookService;
     }
 }

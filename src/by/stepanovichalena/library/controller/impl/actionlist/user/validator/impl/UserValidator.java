@@ -15,7 +15,7 @@ public class UserValidator implements UserValidation {
     @Override
     public boolean isUserDataValid(String userName, String password) throws ControllerException {
          if (userName == null|| password == null) {
-           throw new ControllerException("User name or password is null");
+             return false;
         }
           return isDataValid(NAME_PATTERN, userName) && isDataValid(PASSWORD_PATTERN, password);
     }
@@ -23,7 +23,7 @@ public class UserValidator implements UserValidation {
     @Override
     public boolean isUserNameValid(String userName) throws ControllerException {
         if (userName == null) {
-            throw new ControllerException("User name is null");
+            return false;
         }
         return isDataValid(NAME_PATTERN, userName);
 

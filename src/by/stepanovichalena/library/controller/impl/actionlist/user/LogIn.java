@@ -11,20 +11,22 @@ import by.stepanovichalena.library.entity.AccessLevel;
 import by.stepanovichalena.library.entity.User;
 import by.stepanovichalena.library.service.exception.ServiceException;
 import by.stepanovichalena.library.service.UserService;
-import by.stepanovichalena.library.service.factory.ServiceLibraryFactory;
+import by.stepanovichalena.library.service.factory.ServiceLibraryFactoryImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class LogIn implements Command {
     private static final Logger LOGGER = LogManager.getLogger(LogIn.class);
-    private static final String LOG_IN_OK = " Welcome back ";
-    private static final String LOG_IN_ERROR = " Inputted values is invalid ";
+    private static final String LOG_IN_OK = " welcome back ";
+    private static final String LOG_IN_ERROR = " inputted values is invalid ";
+    private static final String INCORRECT_PASSWORD_OR_LOGIN = " incorrect password or login ";
     private UserValidation userValidation = new UserValidator();
+
     private UserService userSource;
     private String[] requestParameters;
 
     public LogIn(UserDAO userDAO) {
-        this.userSource = ServiceLibraryFactory.getInstance().getUserService(userDAO);
+        this.userSource = ServiceLibraryFactoryImpl.getInstance().getUserService(userDAO);
     }
 
     @Override
@@ -34,18 +36,14 @@ public class LogIn implements Command {
         String userName = requestParameters[0];
         String password = requestParameters[1];
         try {
-            userValidation.isUserDataValid(userName, password);
-            User user = new User(userName, HashPassword.hashPassword(password), AccessLevel.DEFAULT);
-            result = userSource.logIn(user);
-
-        if (result) {
-            if (userSource.isAccessLevelAdmin(user)) {
-                user.setAccessLevel(AccessLevel.ADMIN);
-            } else {
-                user.setAccessLevel(AccessLevel.USER);
+            if (userValidation.isUserDataValid(userName, password)) {
+                User tempUser = new User(userName, HashPassword.hashPassword(password), AccessLevel.DEFAULT);
+                if (userSource.logIn(tempUser).getName().equals(tempUser.getName())){
+                    UserHolder.setUser(userSource.logIn(tempUser));
+                    result = true;
+                }
+                resultLine.append(INCORRECT_PASSWORD_OR_LOGIN);
             }
-            UserHolder.setUser(user);
-        }
         } catch (ControllerException | ServiceException e) {
             LOGGER.warn("Exception in log in command ", e);
             resultLine.append(e.getMessage());
@@ -62,4 +60,9 @@ public class LogIn implements Command {
     public void setUserValidation(UserValidation userValidation) {
         this.userValidation = userValidation;
     }
+
+    public void setUserSource(UserService userSource) {
+        this.userSource = userSource;
+    }
+
 }

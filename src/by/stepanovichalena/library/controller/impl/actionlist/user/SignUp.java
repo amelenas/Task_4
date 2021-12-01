@@ -9,18 +9,18 @@ import by.stepanovichalena.library.entity.AccessLevel;
 import by.stepanovichalena.library.entity.User;
 import by.stepanovichalena.library.service.exception.ServiceException;
 import by.stepanovichalena.library.service.UserService;
-import by.stepanovichalena.library.service.factory.ServiceLibraryFactory;
+import by.stepanovichalena.library.service.factory.ServiceLibraryFactoryImpl;
 import by.stepanovichalena.library.controller.impl.actionlist.user.validator.UserValidation;
 
 public class SignUp implements Command {
-    private static final String SIGN_UP_OK = " Successfully registered ";
-    private static final String SIGN_UP_ERROR = " Inputted values is invalid ";
+    private static final String SIGN_UP_OK = " successfully registered ";
+    private static final String SIGN_UP_ERROR = " inputted values is invalid ";
     private UserValidation userValidation = new UserValidator();
     private UserService userSource;
     private String[] requestParameters;
 
     public SignUp(UserDAO userDAO) {
-        this.userSource = ServiceLibraryFactory.getInstance().getUserService(userDAO);
+        this.userSource = ServiceLibraryFactoryImpl.getInstance().getUserService(userDAO);
     }
 
     @Override
@@ -48,6 +48,10 @@ public class SignUp implements Command {
 
     public void setUserValidation(UserValidation userValidation) {
         this.userValidation = userValidation;
+    }
+
+    public void setUserSource(UserService userSource) {
+        this.userSource = userSource;
     }
 
 }

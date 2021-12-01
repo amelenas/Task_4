@@ -10,7 +10,7 @@ import by.stepanovichalena.library.entity.AccessLevel;
 import by.stepanovichalena.library.entity.User;
 import by.stepanovichalena.library.service.UserService;
 import by.stepanovichalena.library.service.exception.ServiceException;
-import by.stepanovichalena.library.service.factory.ServiceLibraryFactory;
+import by.stepanovichalena.library.service.factory.ServiceLibraryFactoryImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,7 +24,7 @@ public class ChangeUserLevel implements Command {
     private String[] requestParameters;
 
     public ChangeUserLevel(UserDAO userDAO) {
-        this.userSource = ServiceLibraryFactory.getInstance().getUserService(userDAO);
+        this.userSource = ServiceLibraryFactoryImpl.getInstance().getUserService(userDAO);
     }
 
     @Override
@@ -57,4 +57,14 @@ public class ChangeUserLevel implements Command {
     public void request(String... requestParameters) {
         this.requestParameters = requestParameters;
     }
+
+
+    public void setUserValidation(UserValidation userValidation) {
+        this.userValidation = userValidation;
+    }
+
+    public void setUserSource(UserService userSource) {
+        this.userSource = userSource;
+    }
+
 }

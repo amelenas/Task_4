@@ -28,9 +28,7 @@ public class UserDAOImpl implements UserDAO {
     public boolean register(User user) throws LibraryDAOException {
         download();
         if (user != null && !users.contains(user)) {
-            if (user.getAccessLevel() != AccessLevel.ADMIN) {
-                user.setAccessLevel(AccessLevel.USER);
-            }
+            user.setAccessLevel(AccessLevel.USER);
             users.add(user);
             upload();
             return true;
@@ -39,42 +37,31 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public boolean logIn(User user) throws LibraryDAOException {
+    public User logIn(User user) throws LibraryDAOException {
         download();
+        User tempUser = new User(" ", " ", AccessLevel.DEFAULT);
         if (user == null || user.getName() == null) {
-            return false;
+            throw new LibraryDAOException("User is null");
         }
         if (users.contains(user)) {
             User u = users.ceiling(user);
-            if (u != null) {
-                return u.getPassword().equals(user.getPassword());
+            if (u != null && u.getPassword().equals(user.getPassword())) {
+                tempUser = u;
             }
         }
-        return false;
+        return tempUser;
     }
 
-    @Override
-    public boolean isLevelAdmin(User user) {
-        User tmpUser;
-        boolean result = false;
-        if (users.contains(user)) {
-            tmpUser = users.ceiling(user);
-            if (tmpUser != null) {
-                result = tmpUser.getAccessLevel().equals(AccessLevel.ADMIN);
-            }
-        }
-        return result;
-    }
 
     @Override
-    public boolean changeUsersLevel(User user) throws LibraryDAOException {
+    public boolean changeUserLevel(User user) throws LibraryDAOException {
         download();
         boolean result = false;
         if (user == null || user.getName() == null) {
             return false;
         }
-        for (User u : users){
-            if (u.getName().equals(user.getName())){
+        for (User u : users) {
+            if (u.getName().equals(user.getName())) {
                 u.setAccessLevel(user.getAccessLevel());
                 users.add(u);
                 upload();

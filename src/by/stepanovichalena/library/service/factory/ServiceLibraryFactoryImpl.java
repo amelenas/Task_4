@@ -7,17 +7,17 @@ import by.stepanovichalena.library.service.UserService;
 import by.stepanovichalena.library.service.impl.BookServiceImpl;
 import by.stepanovichalena.library.service.impl.UserServiceImpl;
 
-public class ServiceLibraryFactory {
+public class ServiceLibraryFactoryImpl {
 
-    private ServiceLibraryFactory() {
+    private ServiceLibraryFactoryImpl() {
     }
 
     private static class ServiceFactoryHolder {
-        public static final ServiceLibraryFactory HOLDER_INSTANCE = new ServiceLibraryFactory();
+        public static final ServiceLibraryFactoryImpl HOLDER_INSTANCE = new ServiceLibraryFactoryImpl();
     }
 
-    public static ServiceLibraryFactory getInstance() {
-        return ServiceLibraryFactory.ServiceFactoryHolder.HOLDER_INSTANCE;
+    public static ServiceLibraryFactoryImpl getInstance() {
+        return ServiceLibraryFactoryImpl.ServiceFactoryHolder.HOLDER_INSTANCE;
     }
 
     public UserService getUserService(UserDAO userDAO) {

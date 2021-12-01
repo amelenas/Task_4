@@ -7,6 +7,8 @@ import by.stepanovichalena.library.dao.impl.BookDAOImpl;
 import by.stepanovichalena.library.dao.impl.UserDAOImpl;
 
 public class LibraryDAOFactoryImpl implements LibraryDAOFactory {
+    private UserDAO userDAO = new UserDAOImpl();
+    private BookDAO bookDAO = new BookDAOImpl();
 
     private LibraryDAOFactoryImpl() {
     }
@@ -21,12 +23,21 @@ public class LibraryDAOFactoryImpl implements LibraryDAOFactory {
 
     @Override
     public UserDAO getUserDAO() {
-        return new UserDAOImpl();
+        return userDAO;
     }
 
     @Override
     public BookDAO getBookDAO() {
-        return new BookDAOImpl();
+        return bookDAO;
     }
 
+    @Override
+    public void setUserDAO(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
+
+    @Override
+    public void setBookDAO(BookDAO bookDAO) {
+        this.bookDAO = bookDAO;
+    }
 }

@@ -9,6 +9,6 @@ public interface LibraryReader {
 
     List<String> readAll(String propertyName) throws ReaderDAOException;
 
-    void write(String sourceProperty, Collection<String> users, boolean isAppend) throws ReaderDAOException;
+    void write(String sourceProperty, Collection<String> data, boolean isAppend) throws ReaderDAOException;
 
 }

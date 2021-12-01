@@ -6,8 +6,6 @@ import by.stepanovichalena.library.controller.exception.ControllerException;
 import by.stepanovichalena.library.controller.impl.Commands;
 import by.stepanovichalena.library.dao.factory.impl.LibraryDAOFactoryImpl;
 import by.stepanovichalena.library.entity.AccessLevel;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 
 import java.util.ArrayList;
@@ -15,7 +13,6 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class View {
-    private static final Logger LOGGER = LogManager.getLogger(View.class);
 
     public static void main(String[] args) {
         String actionInputted;
@@ -86,7 +83,6 @@ public class View {
                 }
             }
             String[] requests = request.toArray(new String[0]);
-            LOGGER.info(Arrays.toString(requests));
             try {
                 response = controller.start(actions, requests);
             } catch (ControllerException e) {

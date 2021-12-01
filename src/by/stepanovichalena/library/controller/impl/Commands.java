@@ -24,22 +24,22 @@ public class Commands {
         this.userDAO = libraryDAOFactory.getUserDAO();
         this.bookDAO = libraryDAOFactory.getBookDAO();
         this.commands = new HashMap<>();
-        {
-            commands.put(Actions.SIGN_UP, new SignUp(userDAO));
-            commands.put(Actions.LOG_IN, new LogIn(userDAO));
-            commands.put(Actions.CHANGE_USER_LEVEL, new ChangeUserLevel(userDAO));
-            commands.put(Actions.ADD_BOOK, new AddBook(bookDAO));
-            commands.put(Actions.FIND_BOOK, new FindBook(bookDAO));
-            commands.put(Actions.FIND_BOOK_BY_TITLE, new FindBookByTitle(bookDAO));
-            commands.put(Actions.FIND_BOOK_BY_AUTHOR, new FindBookByAuthor(bookDAO));
-            commands.put(Actions.DELETE_BOOK, new DeleteBook(bookDAO));
-            commands.put(Actions.DELETE_BOOK_BY_ID, new DeleteBookById(bookDAO));
-            commands.put(Actions.SHOW_ALL, new ShowAll(bookDAO));
-            commands.put(Actions.WRONG_REQUEST, new WrongRequest());
-        }
+
+        commands.put(Actions.SIGN_UP, new SignUp(userDAO));
+        commands.put(Actions.LOG_IN, new LogIn(userDAO));
+        commands.put(Actions.CHANGE_USER_LEVEL, new ChangeUserLevel(userDAO));
+        commands.put(Actions.ADD_BOOK, new AddBook(bookDAO));
+        commands.put(Actions.FIND_BOOK, new FindBook(bookDAO));
+        commands.put(Actions.FIND_BOOK_BY_TITLE, new FindBookByTitle(bookDAO));
+        commands.put(Actions.FIND_BOOK_BY_AUTHOR, new FindBookByAuthor(bookDAO));
+        commands.put(Actions.DELETE_BOOK, new DeleteBook(bookDAO));
+        commands.put(Actions.DELETE_BOOK_BY_ID, new DeleteBookById(bookDAO));
+        commands.put(Actions.SHOW_ALL, new ShowAll(bookDAO));
+        commands.put(Actions.WRONG_REQUEST, new WrongRequest());
+
     }
 
-    public Command getCommand(Actions actions){
+    public Command getCommand(Actions actions) {
         Command command;
         if (actions == null) {
             command = commands.get(Actions.WRONG_REQUEST);
@@ -49,14 +49,15 @@ public class Commands {
         return command;
     }
 
-    public Command addCommand(Actions action, Command command){
+    public Command addCommand(Actions action, Command command) {
         if (commands.containsValue(action)) {
-           throw new ConcurrentModificationException("Command already exists");
+            throw new ConcurrentModificationException("Command already exists");
         } else {
             commands.put(action, command);
         }
         return command;
     }
+
     public UserDAO getUserDAO() {
         return userDAO;
     }
