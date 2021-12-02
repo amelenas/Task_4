@@ -22,6 +22,7 @@ public class LogIn implements Command {
     private static final String LOG_IN_ERROR = " inputted values is invalid ";
     private static final String INCORRECT_PASSWORD_OR_LOGIN = " incorrect password or login ";
     private UserValidation userValidation = new UserValidator();
+    private HashPassword hashPassword = new HashPassword();
 
     private UserService userSource;
     private String[] requestParameters;
@@ -38,7 +39,7 @@ public class LogIn implements Command {
 
         try {
             if (userValidation.isUserDataValid(userName, password)) {
-                User tempUser = new User(userName, HashPassword.hashPassword(password), AccessLevel.DEFAULT);
+                User tempUser = new User(userName, hashPassword.hashPassword(password), AccessLevel.DEFAULT);
                 if (userSource.logIn(tempUser).getName().equals(tempUser.getName())){
                     UserHolder.setUser(userSource.logIn(tempUser));
                     result = true;
@@ -66,4 +67,7 @@ public class LogIn implements Command {
         this.userSource = userSource;
     }
 
+    public void setHashPassword(HashPassword hashPassword) {
+        this.hashPassword = hashPassword;
+    }
 }

@@ -58,7 +58,6 @@ public class ChangeUserLevel implements Command {
         this.requestParameters = requestParameters;
     }
 
-
     public void setUserValidation(UserValidation userValidation) {
         this.userValidation = userValidation;
     }

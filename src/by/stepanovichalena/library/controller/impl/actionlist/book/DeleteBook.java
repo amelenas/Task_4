@@ -58,7 +58,6 @@ public class DeleteBook implements Command {
         this.bookValidation = bookValidation;
     }
 
-
     public void setBookService(BookService bookService) {
         this.bookService = bookService;
     }

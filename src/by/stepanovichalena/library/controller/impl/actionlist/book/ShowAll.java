@@ -21,7 +21,6 @@ public class ShowAll implements Command {
 
     public ShowAll(BookDAO bookDAO) {
         this.bookService = ServiceLibraryFactoryImpl.getInstance().getBookService(bookDAO);
-
     }
 
     public ShowAll() {

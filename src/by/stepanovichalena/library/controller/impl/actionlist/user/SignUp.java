@@ -16,6 +16,7 @@ public class SignUp implements Command {
     private static final String SIGN_UP_OK = " successfully registered ";
     private static final String SIGN_UP_ERROR = " inputted values is invalid ";
     private UserValidation userValidation = new UserValidator();
+    private HashPassword hashPassword = new HashPassword();
     private UserService userSource;
     private String[] requestParameters;
 
@@ -30,15 +31,14 @@ public class SignUp implements Command {
         String userName = requestParameters[0];
         String password = requestParameters[1];
         try {
-            userValidation.isUserDataValid(userName, HashPassword.hashPassword(password));
-            User user = new User(userName, HashPassword.hashPassword(password),AccessLevel.DEFAULT);
+            userValidation.isUserDataValid(userName, password);
+            User user = new User(userName, hashPassword.hashPassword(password),AccessLevel.DEFAULT);
             result = userSource.register(user);
         } catch (ControllerException | ServiceException e) {
             resultLine.append(e.getMessage());
         }
         resultLine.append(result ? SIGN_UP_OK : SIGN_UP_ERROR);
         return resultLine.toString();
-
     }
 
     @Override
@@ -54,4 +54,7 @@ public class SignUp implements Command {
         this.userSource = userSource;
     }
 
+    public void setHashPassword(HashPassword hashPassword) {
+        this.hashPassword = hashPassword;
+    }
 }

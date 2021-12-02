@@ -6,7 +6,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class HashPassword {
-    public static String hashPassword(String password) throws ControllerException {
+    public String hashPassword(String password) throws ControllerException {
         StringBuilder hashBuilder = new StringBuilder();
         MessageDigest messageDigest;
         try {
