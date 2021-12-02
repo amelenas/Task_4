@@ -3,7 +3,7 @@ package by.stepanovichalena.library.controller.impl.actionlist.user;
 import by.stepanovichalena.library.controller.UserHolder;
 import by.stepanovichalena.library.controller.exception.ControllerException;
 import by.stepanovichalena.library.controller.Command;
-import by.stepanovichalena.library.controller.impl.actionlist.user.validator.HashPassword;
+import by.stepanovichalena.library.util.HashPassword;
 import by.stepanovichalena.library.controller.impl.actionlist.user.validator.UserValidation;
 import by.stepanovichalena.library.controller.impl.actionlist.user.validator.impl.UserValidator;
 import by.stepanovichalena.library.dao.UserDAO;
@@ -14,6 +14,7 @@ import by.stepanovichalena.library.service.UserService;
 import by.stepanovichalena.library.service.factory.ServiceLibraryFactoryImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 
 public class LogIn implements Command {
     private static final Logger LOGGER = LogManager.getLogger(LogIn.class);
@@ -28,13 +29,13 @@ public class LogIn implements Command {
     public LogIn(UserDAO userDAO) {
         this.userSource = ServiceLibraryFactoryImpl.getInstance().getUserService(userDAO);
     }
-
     @Override
     public String execute() {
         boolean result = false;
         StringBuilder resultLine = new StringBuilder();
         String userName = requestParameters[0];
         String password = requestParameters[1];
+
         try {
             if (userValidation.isUserDataValid(userName, password)) {
                 User tempUser = new User(userName, HashPassword.hashPassword(password), AccessLevel.DEFAULT);

@@ -43,6 +43,7 @@ public class TXTReader implements LibraryReader {
         try {
             textLines = Files.readAllLines(Paths.get(path));
         } catch (IOException e) {
+            LOGGER.error("Can't read file ", e);
             throw new ReaderDAOException("Can't read file", e);
         }
         return textLines;

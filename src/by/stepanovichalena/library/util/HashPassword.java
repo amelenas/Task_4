@@ -1,4 +1,4 @@
-package by.stepanovichalena.library.controller.impl.actionlist.user.validator;
+package by.stepanovichalena.library.util;
 
 import by.stepanovichalena.library.controller.exception.ControllerException;
 

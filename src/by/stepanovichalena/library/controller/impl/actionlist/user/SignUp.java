@@ -2,7 +2,7 @@ package by.stepanovichalena.library.controller.impl.actionlist.user;
 
 import by.stepanovichalena.library.controller.exception.ControllerException;
 import by.stepanovichalena.library.controller.Command;
-import by.stepanovichalena.library.controller.impl.actionlist.user.validator.HashPassword;
+import by.stepanovichalena.library.util.HashPassword;
 import by.stepanovichalena.library.controller.impl.actionlist.user.validator.impl.UserValidator;
 import by.stepanovichalena.library.dao.UserDAO;
 import by.stepanovichalena.library.entity.AccessLevel;
