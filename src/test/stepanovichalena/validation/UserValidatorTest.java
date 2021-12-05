@@ -1,22 +1,21 @@
-package test.stepanovichalena.controller.actionlist.validation;
+package test.stepanovichalena.validation;
 
-import by.stepanovichalena.library.controller.exception.ControllerException;
-import by.stepanovichalena.library.controller.impl.actionlist.user.validator.impl.UserValidator;
+import by.stepanovichalena.library.validation.impl.UserValidator;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class UserValidatorTest {
     UserValidator userValidator = new UserValidator();
     @Test
-    public void validateUser() throws ControllerException {
+    public void validateUser() {
         assertTrue(userValidator.isUserDataValid("UserName", "UserName"));
     }
     @Test
-    public void badUserName() throws ControllerException {
+    public void badUserName() {
         assertFalse(userValidator.isUserDataValid("User Name", "UserName"));
     }
     @Test
-    public void badPassword() throws ControllerException {
+    public void badPassword() {
         assertFalse(userValidator.isUserDataValid("UserName", "Use"));
     }
 }

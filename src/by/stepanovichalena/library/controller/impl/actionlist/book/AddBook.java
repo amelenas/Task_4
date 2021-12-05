@@ -3,8 +3,8 @@ package by.stepanovichalena.library.controller.impl.actionlist.book;
 import by.stepanovichalena.library.controller.UserHolder;
 import by.stepanovichalena.library.controller.exception.ControllerException;
 import by.stepanovichalena.library.controller.Command;
-import by.stepanovichalena.library.controller.impl.actionlist.book.validator.BookValidation;
-import by.stepanovichalena.library.controller.impl.actionlist.book.validator.impl.BookValidator;
+import by.stepanovichalena.library.validation.BookValidation;
+import by.stepanovichalena.library.validation.impl.BookValidator;
 import by.stepanovichalena.library.dao.BookDAO;
 import by.stepanovichalena.library.entity.AccessLevel;
 import by.stepanovichalena.library.entity.Book;
@@ -16,6 +16,7 @@ public class AddBook implements Command {
     private static final String ADDED = " added ";
     private static final String NOT_ADDED = " book not added ";
     private static final String INCORRECT_ACCESS_LEVEL = " incorrect access level ";
+    private static final String INCORRECT_BOOK_DATA = " incorrect book data ";
     private BookValidation bookValidation = new BookValidator();
     private BookService bookService;
     private String[] requestParameters;
@@ -34,12 +35,14 @@ public class AddBook implements Command {
             String authorsName = requestParameters[1];
             if (!isAccessLevelAdmin()) {
                 response.append(INCORRECT_ACCESS_LEVEL);
+            }
+            if (bookValidation.isBookDataValid(title, authorsName)) {
+                response.append(INCORRECT_BOOK_DATA);
             } else {
                 try {
-                    bookValidation.isBookDataValid(title, authorsName);
                     book = new Book(-1, title, authorsName);
                     result = bookService.addBook(book);
-                } catch (ControllerException | ServiceException e) {
+                } catch (ServiceException e) {
                     response.append(e.getMessage());
                 }
             }
@@ -60,7 +63,6 @@ public class AddBook implements Command {
     public void setBookValidation(BookValidation bookValidation) {
         this.bookValidation = bookValidation;
     }
-
 
     public void setBookService(BookService bookService) {
         this.bookService = bookService;

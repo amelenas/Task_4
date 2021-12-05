@@ -30,7 +30,7 @@ public class UserServiceImplTest {
         System.out.println(userService.logIn(new User("ServiceUserTest2","Password", AccessLevel.ADMIN)));
     }
 
-    @Test
+    @Test (expected = ServiceException.class)
     public void logInNull() throws ServiceException {
         System.out.println(userService.logIn(null));
     }

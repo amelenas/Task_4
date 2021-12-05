@@ -1,19 +1,18 @@
-package by.stepanovichalena.library.controller.impl.actionlist.user.validator.impl;
+package by.stepanovichalena.library.validation.impl;
 
-import by.stepanovichalena.library.controller.exception.ControllerException;
-import by.stepanovichalena.library.controller.impl.actionlist.user.validator.UserValidation;
+import by.stepanovichalena.library.validation.UserValidation;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UserValidator implements UserValidation {
     private final static String COMMON_PATTERN = "([\\w_])";
-    private final static String PASSWORD_PATTERN = COMMON_PATTERN + "{5,20}";
+    private final static String PASSWORD_PATTERN = COMMON_PATTERN + "{5,200}";
     private final static String NAME_PATTERN = COMMON_PATTERN + "{2,30}";
 
 
     @Override
-    public boolean isUserDataValid(String userName, String password) throws ControllerException {
+    public boolean isUserDataValid(String userName, String password){
          if (userName == null|| password == null) {
              return false;
         }
@@ -21,7 +20,7 @@ public class UserValidator implements UserValidation {
     }
 
     @Override
-    public boolean isUserNameValid(String userName) throws ControllerException {
+    public boolean isUserNameValid(String userName) {
         if (userName == null) {
             return false;
         }

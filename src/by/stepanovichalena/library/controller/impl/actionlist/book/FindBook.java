@@ -2,8 +2,8 @@ package by.stepanovichalena.library.controller.impl.actionlist.book;
 
 import by.stepanovichalena.library.controller.exception.ControllerException;
 import by.stepanovichalena.library.controller.Command;
-import by.stepanovichalena.library.controller.impl.actionlist.book.validator.BookValidation;
-import by.stepanovichalena.library.controller.impl.actionlist.book.validator.impl.BookValidator;
+import by.stepanovichalena.library.validation.BookValidation;
+import by.stepanovichalena.library.validation.impl.BookValidator;
 import by.stepanovichalena.library.dao.BookDAO;
 import by.stepanovichalena.library.entity.Book;
 import by.stepanovichalena.library.service.factory.ServiceLibraryFactoryImpl;
@@ -33,48 +33,42 @@ public class FindBook implements Command {
         if (requestParameters != null) {
             String title = requestParameters[0];
             String authorsName = requestParameters[1];
-            try {
-                bookValidation.isTitleValid(title);
-                book.setTitle(title);
-            } catch (ControllerException e) {
+            if (!bookValidation.isBookDataValid(authorsName, title)) {
                 response.append(NOT_FOUND);
-            }
-            try {
-                bookValidation.isAuthorsNameValid(authorsName);
-                book.setAuthorsName(authorsName);
-            } catch (ControllerException e) {
-                response.append(e.getMessage());
-            }
-            Collection<Book> lib = null;
-            try {
-                lib = bookService.find(book);
-            } catch (ServiceException e) {
-                LOGGER.warn("Exception in command find book", e);
-                response.append(e.getMessage());
-            }
-            if (lib != null && lib.size() > 0) {
-                response = new StringBuilder(FOUND + "\n");
-                for (Book b : lib) {
-                    String bookDetail = String.join("/", String.valueOf(b.getId()), b.getTitle(), b.getAuthorsName());
-                    response.append(bookDetail).append("\n");
-                }
             } else {
-                response.append(NOT_FOUND);
+                book.setTitle(title);
+                book.setAuthorsName(authorsName);
+                Collection<Book> lib = null;
+                try {
+                    lib = bookService.find(book);
+                } catch (ServiceException e) {
+                    LOGGER.warn("Exception in command find book", e);
+                    response.append(e.getMessage());
+                }
+                if (lib != null && lib.size() > 0) {
+                    response = new StringBuilder(FOUND + "\n");
+                    for (Book b : lib) {
+                        String bookDetail = String.join("/", String.valueOf(b.getId()), b.getTitle(), b.getAuthorsName());
+                        response.append(bookDetail).append("\n");
+                    }
+                } else {
+                    response.append(NOT_FOUND);
+                }
             }
         }
         return response.toString();
     }
 
-    @Override
-    public void request(String... requestParameters) {
-        this.requestParameters = requestParameters;
-    }
+        @Override
+        public void request (String...requestParameters){
+            this.requestParameters = requestParameters;
+        }
 
-    public void setBookValidation(BookValidation bookValidation) {
-        this.bookValidation = bookValidation;
-    }
+        public void setBookValidation (BookValidation bookValidation){
+            this.bookValidation = bookValidation;
+        }
 
-    public void setBookService(BookService bookService) {
-        this.bookService = bookService;
+        public void setBookService (BookService bookService){
+            this.bookService = bookService;
+        }
     }
-}

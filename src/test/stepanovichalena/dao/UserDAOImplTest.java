@@ -28,7 +28,7 @@ public class UserDAOImplTest {
         System.out.println(userDAO.logIn(new User("Test24", "32165", AccessLevel.ADMIN)));
     }
 
-    @Test
+    @Test (expected = LibraryDAOException.class)
     public void logInNull() throws LibraryDAOException {
         System.out.println(userDAO.logIn(null));
     }
@@ -38,7 +38,7 @@ public class UserDAOImplTest {
         System.out.println(userDAO.logIn(new User("Test2", "321", AccessLevel.ADMIN)));
     }
 
-    @Test
+    @Test (expected = LibraryDAOException.class)
     public void logInInvalidPasswordNull() throws LibraryDAOException {
         System.out.println(userDAO.logIn(null));
     }

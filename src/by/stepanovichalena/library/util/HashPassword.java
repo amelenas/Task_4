@@ -1,12 +1,13 @@
 package by.stepanovichalena.library.util;
 
 import by.stepanovichalena.library.controller.exception.ControllerException;
+import by.stepanovichalena.library.util.exeption.LibraryException;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class HashPassword {
-    public String hashPassword(String password) throws ControllerException {
+    public String hashPassword(String password) throws LibraryException {
         StringBuilder hashBuilder = new StringBuilder();
         MessageDigest messageDigest;
         try {
@@ -18,7 +19,7 @@ public class HashPassword {
                 }
             }
         } catch (NoSuchAlgorithmException e) {
-            throw new ControllerException("Exception while hashing password", e);
+            throw new LibraryException("Exception while hashing password", e);
         }
         return hashBuilder.toString();
     }

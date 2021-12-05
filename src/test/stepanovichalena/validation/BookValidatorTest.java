@@ -1,7 +1,6 @@
-package test.stepanovichalena.controller.actionlist.validation;
+package test.stepanovichalena.validation;
 
-import by.stepanovichalena.library.controller.exception.ControllerException;
-import by.stepanovichalena.library.controller.impl.actionlist.book.validator.impl.BookValidator;
+import by.stepanovichalena.library.validation.impl.BookValidator;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -11,48 +10,48 @@ public class BookValidatorTest {
     BookValidator bookValidator = new BookValidator();
 
     @Test
-    public void validateNameAndTitle() throws ControllerException {
+    public void validateNameAndTitle() {
         Assert.assertTrue(bookValidator.isBookDataValid("Author", "Book"));
     }
 
     @Test
-    public void validateNameAndTitleNegative() throws ControllerException {
+    public void validateNameAndTitleNegative() {
         assertFalse(bookValidator.isBookDataValid("Book", "Author32"));
     }
 
     @Test
-    public void validateNamePositive() throws ControllerException {
+    public void validateNamePositive() {
         assertTrue(bookValidator.isAuthorsNameValid("Author"));
     }
 
     @Test
-    public void validateTitlePositive() throws ControllerException {
+    public void validateTitlePositive(){
         assertTrue(bookValidator.isTitleValid("C++"));
     }
 
     @Test
-    public void validateNameLastName() throws ControllerException {
+    public void validateNameLastName()  {
         assertTrue(bookValidator.isAuthorsNameValid("Author Author"));
     }
 
     @Test
-    public void validateNameNegative() throws ControllerException {
+    public void validateNameNegative() {
         assertFalse(bookValidator.isAuthorsNameValid("Author32"));
     }
     @Test
-    public void isIdValidPositive() throws ControllerException {
+    public void isIdValidPositive() {
         assertTrue(bookValidator.isIdValid("32"));
     }
     @Test
-    public void isIdValidNegative() throws ControllerException {
+    public void isIdValidNegative() {
         assertFalse(bookValidator.isIdValid("LLLL"));
     }
     @Test
-    public void isIdValidNumbersAndLetters() throws ControllerException {
+    public void isIdValidNumbersAndLetters()  {
         assertFalse(bookValidator.isIdValid("32LLLL"));
     }
     @Test
-    public void isIdValidNumbersAndLetters2() throws ControllerException {
+    public void isIdValidNumbersAndLetters2()  {
         assertFalse(bookValidator.isIdValid("32 LLLL"));
     }
 }

@@ -5,12 +5,14 @@ import by.stepanovichalena.library.dao.exception.LibraryDAOException;
 import by.stepanovichalena.library.dao.UserDAO;
 import by.stepanovichalena.library.service.UserService;
 import by.stepanovichalena.library.service.exception.ServiceException;
+import by.stepanovichalena.library.validation.UserValidation;
+import by.stepanovichalena.library.validation.impl.UserValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class UserServiceImpl implements UserService {
-
     private static final Logger LOGGER = LogManager.getLogger(UserServiceImpl.class);
+    UserValidation userValidation = new UserValidator();
     private UserDAO userDAO;
 
     public UserServiceImpl() {
@@ -23,6 +25,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean register(User user) throws ServiceException {
         boolean result;
+        if (user == null) return false;
+        if (!userValidation.isUserNameValid(user.getName())) return false;
         try {
             result = userDAO.register(user);
         } catch (LibraryDAOException e) {
@@ -34,6 +38,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User logIn(User user) throws ServiceException {
+        if (user == null) {
+            throw new ServiceException("User data is invalid");
+        }
+        if (!userValidation.isUserNameValid(user.getName())) {
+            throw new ServiceException("User data is invalid");
+        }
         try {
             return userDAO.logIn(user);
         } catch (LibraryDAOException e) {
@@ -41,10 +51,10 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-
     @Override
     public boolean findUser(User user) throws ServiceException {
         boolean result;
+        if (!userValidation.isUserNameValid(user.getName())) return false;
         try {
             result = userDAO.userSearch(user);
         } catch (LibraryDAOException e) {
@@ -56,6 +66,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean changeAccessLevel(User user) throws ServiceException {
         boolean result;
+        if (user == null) return false;
+        if (!userValidation.isUserNameValid(user.getName())) return false;
         try {
             result = userDAO.changeUserLevel(user);
         } catch (LibraryDAOException e) {
@@ -63,4 +75,9 @@ public class UserServiceImpl implements UserService {
         }
         return result;
     }
+
+    public void setUserValidation(UserValidation userValidation) {
+        this.userValidation = userValidation;
+    }
+
 }

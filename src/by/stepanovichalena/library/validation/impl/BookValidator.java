@@ -1,8 +1,6 @@
-package by.stepanovichalena.library.controller.impl.actionlist.book.validator.impl;
+package by.stepanovichalena.library.validation.impl;
 
-
-import by.stepanovichalena.library.controller.exception.ControllerException;
-import by.stepanovichalena.library.controller.impl.actionlist.book.validator.BookValidation;
+import by.stepanovichalena.library.validation.BookValidation;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,7 +12,7 @@ public class BookValidator implements BookValidation {
     private final static String ID_PATTERN = "\\d+";
 
     @Override
-    public boolean isTitleValid(String title) throws ControllerException {
+    public boolean isTitleValid(String title){
         if (isEmpty(title)) {
            return false;
         }
@@ -22,7 +20,7 @@ public class BookValidator implements BookValidation {
     }
 
     @Override
-    public boolean isAuthorsNameValid(String authorsName) throws ControllerException {
+    public boolean isAuthorsNameValid(String authorsName) {
         if (isEmpty(authorsName)) {
             return false;
         }
@@ -30,7 +28,7 @@ public class BookValidator implements BookValidation {
     }
 
     @Override
-    public boolean isIdValid(String id) throws ControllerException {
+    public boolean isIdValid(String id) {
         if (isEmpty(id)) {
             return false;
         }
@@ -38,7 +36,7 @@ public class BookValidator implements BookValidation {
     }
 
     @Override
-    public boolean isBookDataValid(String title, String authorsName) throws ControllerException {
+    public boolean isBookDataValid(String title, String authorsName) {
         if (isEmpty(authorsName) && isEmpty(title)) {
             return false;
         }

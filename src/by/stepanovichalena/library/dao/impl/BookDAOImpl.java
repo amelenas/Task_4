@@ -6,13 +6,10 @@ import by.stepanovichalena.library.dao.BookDAO;
 import by.stepanovichalena.library.dao.exception.LibraryDAOException;
 import by.stepanovichalena.library.dao.source.reader.TXTReader;
 import by.stepanovichalena.library.entity.Book;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 
 public class BookDAOImpl implements BookDAO {
-    private static final Logger LOGGER = LogManager.getLogger(BookDAOImpl.class);
     private static final String BOOKS_SOURCE_PATH = "books.txt.source.path";
     private String delimiter = "/";
     private LibraryReader bookSource = new TXTReader();
@@ -25,8 +22,7 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public boolean create(Book book) throws LibraryDAOException {
         download();
-        nullCheck(book);
-        if (!books.containsValue(book)) {
+        if (book != null && !books.containsValue(book)) {
             int id = books.size() + 2;
             book.setId(id);
             books.put(id, book);
@@ -70,14 +66,15 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public Collection<Book> find(Book book) throws LibraryDAOException {
         download();
-        nullCheck(book);
         Set<Book> resultByAuthor = new HashSet<>();
-        if (book.getTitle() != null || book.getAuthorsName() != null) {
-            String title = book.getTitle();
-            String author = book.getAuthorsName();
-            Set<Book> resultByTitle = (Set<Book>) findLibByTitle(title);
-            resultByAuthor = (Set<Book>) findByAuthor(author);
-            resultByAuthor.addAll(resultByTitle);
+        if (book != null) {
+            if (book.getTitle() != null || book.getAuthorsName() != null) {
+                String title = book.getTitle();
+                String author = book.getAuthorsName();
+                Set<Book> resultByTitle = (Set<Book>) findLibByTitle(title);
+                resultByAuthor = (Set<Book>) findByAuthor(author);
+                resultByAuthor.addAll(resultByTitle);
+            }
         }
         return resultByAuthor;
     }
@@ -143,14 +140,6 @@ public class BookDAOImpl implements BookDAO {
             }
         } catch (ReaderDAOException e) {
             throw new LibraryDAOException("File writing error", e);
-        }
-    }
-
-
-    private void nullCheck(Book book) throws LibraryDAOException {
-        if (book == null) {
-            LOGGER.error("The book is null");
-            throw new LibraryDAOException("Parameter is null!");
         }
     }
 

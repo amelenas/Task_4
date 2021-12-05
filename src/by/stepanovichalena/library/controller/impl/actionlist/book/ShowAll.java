@@ -36,7 +36,7 @@ public class ShowAll implements Command {
             LOGGER.warn("Exception in command show all", e);
             throw new ControllerException("Exception in command show all", e);
         }
-        for (Book book :books){
+        for (Book book : books){
             result.append(book.getId()).append(delimiter).append(book.getTitle()).append(delimiter).append(book.getAuthorsName()).append(delimiter).append("\n");
         }
         return result.toString();

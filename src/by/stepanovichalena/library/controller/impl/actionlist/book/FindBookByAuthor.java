@@ -2,8 +2,8 @@ package by.stepanovichalena.library.controller.impl.actionlist.book;
 
 import by.stepanovichalena.library.controller.Command;
 import by.stepanovichalena.library.controller.exception.ControllerException;
-import by.stepanovichalena.library.controller.impl.actionlist.book.validator.BookValidation;
-import by.stepanovichalena.library.controller.impl.actionlist.book.validator.impl.BookValidator;
+import by.stepanovichalena.library.validation.BookValidation;
+import by.stepanovichalena.library.validation.impl.BookValidator;
 import by.stepanovichalena.library.dao.BookDAO;
 import by.stepanovichalena.library.entity.Book;
 import by.stepanovichalena.library.service.BookService;
@@ -34,8 +34,9 @@ public class FindBookByAuthor implements Command {
             String authorsName = requestParameters[0];
             Collection<Book> lib = new ArrayList<>();
             try {
-                bookValidation.isAuthorsNameValid(authorsName);
-                lib = bookService.findByAuthor(authorsName);
+                if (bookValidation.isAuthorsNameValid(authorsName)) {
+                    lib = bookService.findByAuthor(authorsName);
+                }
             } catch (ServiceException e) {
                 LOGGER.warn("Exception in command find book", e);
                 response.append(e.getMessage());

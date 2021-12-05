@@ -62,11 +62,11 @@ public class User implements Serializable, Comparable {
 
     @Override
     public String toString() {
-        return this.getClass() +"{" +
-                "name='" + name + '\'' +
+        return new StringBuilder().append(
+                this.getClass()+"{"+"name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", accessLevel=" + accessLevel +
-                '}';
+                '}').toString();
     }
 
     @Override

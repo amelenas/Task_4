@@ -30,7 +30,7 @@ public class BookDAOImplTest {
 
     @Test
     public void deleteNull() throws LibraryDAOException {
-        assertFalse(bookDAO.delete(new Book(27, "TestCreate", "TestCreate")));
+        assertFalse(bookDAO.delete(null));
     }
 
     @Test
@@ -48,7 +48,7 @@ public class BookDAOImplTest {
         System.out.println(bookDAO.find(new Book(13, "Mary Poppins", "Pamela Lyndon Travers")));
     }
 
-    @Test (expected = LibraryDAOException.class)
+    @Test
     public void readNull() throws LibraryDAOException {
         System.out.println(bookDAO.find(null));
     }

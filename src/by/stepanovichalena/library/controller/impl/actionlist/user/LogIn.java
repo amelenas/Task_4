@@ -1,11 +1,11 @@
 package by.stepanovichalena.library.controller.impl.actionlist.user;
 
 import by.stepanovichalena.library.controller.UserHolder;
-import by.stepanovichalena.library.controller.exception.ControllerException;
 import by.stepanovichalena.library.controller.Command;
 import by.stepanovichalena.library.util.HashPassword;
-import by.stepanovichalena.library.controller.impl.actionlist.user.validator.UserValidation;
-import by.stepanovichalena.library.controller.impl.actionlist.user.validator.impl.UserValidator;
+import by.stepanovichalena.library.util.exeption.LibraryException;
+import by.stepanovichalena.library.validation.UserValidation;
+import by.stepanovichalena.library.validation.impl.UserValidator;
 import by.stepanovichalena.library.dao.UserDAO;
 import by.stepanovichalena.library.entity.AccessLevel;
 import by.stepanovichalena.library.entity.User;
@@ -30,23 +30,24 @@ public class LogIn implements Command {
     public LogIn(UserDAO userDAO) {
         this.userSource = ServiceLibraryFactoryImpl.getInstance().getUserService(userDAO);
     }
+
     @Override
     public String execute() {
         boolean result = false;
         StringBuilder resultLine = new StringBuilder();
         String userName = requestParameters[0];
         String password = requestParameters[1];
-
         try {
             if (userValidation.isUserDataValid(userName, password)) {
                 User tempUser = new User(userName, hashPassword.hashPassword(password), AccessLevel.DEFAULT);
-                if (userSource.logIn(tempUser).getName().equals(tempUser.getName())){
+                if (userSource.logIn(tempUser).getName().equals(tempUser.getName())) {
                     UserHolder.setUser(userSource.logIn(tempUser));
                     result = true;
+                } else {
+                    resultLine.append(INCORRECT_PASSWORD_OR_LOGIN);
                 }
-                resultLine.append(INCORRECT_PASSWORD_OR_LOGIN);
             }
-        } catch (ControllerException | ServiceException e) {
+        } catch (ServiceException | LibraryException e) {
             LOGGER.warn("Exception in log in command ", e);
             resultLine.append(e.getMessage());
         }

@@ -5,6 +5,7 @@ import by.stepanovichalena.library.dao.factory.impl.LibraryDAOFactoryImpl;
 import by.stepanovichalena.library.service.exception.ServiceException;
 import org.junit.Test;
 
+
 public class LogInTest {
     LibraryDAOFactoryImpl libraryDAO = LibraryDAOFactoryImpl.getInstance();
     @Test

@@ -62,11 +62,11 @@ public class Book implements Serializable, Comparable {
 
     @Override
     public String toString() {
-        return this.getClass() + "{" +
+        return new StringBuilder(this.getClass() + "{" +
                 "id=" + id +
                 ", authorsName='" + authorsName + '\'' +
                 ", title='" + title + '\'' +
-                '}';
+                '}').toString();
     }
 
     @Override
@@ -74,5 +74,4 @@ public class Book implements Serializable, Comparable {
         Book book = (Book) o;
         return id-book.id;
     }
-
 }

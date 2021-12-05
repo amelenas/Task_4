@@ -28,7 +28,7 @@ public class BookServiceImplTest {
         System.out.println(bookService.find(new Book(0, "Jaws", "Peter Benchley")));
     }
 
-    @Test
+    @Test  (expected = ServiceException.class)
     public void findNull() throws ServiceException {
         System.out.println(bookService.find(null));
     }
@@ -38,7 +38,7 @@ public class BookServiceImplTest {
         System.out.println(bookService.findByAuthor( "Peter Benchley"));
     }
 
-    @Test
+    @Test  (expected = ServiceException.class)
     public void findByAuthorNull() throws ServiceException {
         System.out.println(bookService.findByAuthor(null));
     }
@@ -48,7 +48,7 @@ public class BookServiceImplTest {
         System.out.println(bookService.findByTitle( "Jaws"));
     }
 
-    @Test
+    @Test (expected = ServiceException.class)
     public void findByTitleNull() throws ServiceException {
         System.out.println(bookService.findByAuthor(null));
     }

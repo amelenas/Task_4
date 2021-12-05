@@ -3,8 +3,8 @@ package by.stepanovichalena.library.controller.impl.actionlist.book;
 import by.stepanovichalena.library.controller.Command;
 import by.stepanovichalena.library.controller.UserHolder;
 import by.stepanovichalena.library.controller.exception.ControllerException;
-import by.stepanovichalena.library.controller.impl.actionlist.book.validator.BookValidation;
-import by.stepanovichalena.library.controller.impl.actionlist.book.validator.impl.BookValidator;
+import by.stepanovichalena.library.validation.BookValidation;
+import by.stepanovichalena.library.validation.impl.BookValidator;
 import by.stepanovichalena.library.dao.BookDAO;
 import by.stepanovichalena.library.entity.AccessLevel;
 import by.stepanovichalena.library.service.BookService;
@@ -43,7 +43,7 @@ public class DeleteBookById implements Command {
                     result = bookService.deleteBookById(Integer.parseInt(id));
                     LOGGER.info(result);
                 }
-            } catch (ControllerException | ServiceException e) {
+            } catch (ServiceException e) {
                 throw new ControllerException("Exception in command delete by id ", e);
             }
         }
