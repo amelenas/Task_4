@@ -36,7 +36,7 @@ public class AddBook implements Command {
             if (!isAccessLevelAdmin()) {
                 response.append(INCORRECT_ACCESS_LEVEL);
             }
-            if (bookValidation.isBookDataValid(title, authorsName)) {
+            if (!bookValidation.isBookDataValid(title, authorsName)) {
                 response.append(INCORRECT_BOOK_DATA);
             } else {
                 try {

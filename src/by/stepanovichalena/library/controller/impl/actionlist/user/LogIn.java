@@ -2,8 +2,6 @@ package by.stepanovichalena.library.controller.impl.actionlist.user;
 
 import by.stepanovichalena.library.controller.UserHolder;
 import by.stepanovichalena.library.controller.Command;
-import by.stepanovichalena.library.util.HashPassword;
-import by.stepanovichalena.library.util.exeption.LibraryException;
 import by.stepanovichalena.library.validation.UserValidation;
 import by.stepanovichalena.library.validation.impl.UserValidator;
 import by.stepanovichalena.library.dao.UserDAO;
@@ -22,7 +20,6 @@ public class LogIn implements Command {
     private static final String LOG_IN_ERROR = " inputted values is invalid ";
     private static final String INCORRECT_PASSWORD_OR_LOGIN = " incorrect password or login ";
     private UserValidation userValidation = new UserValidator();
-    private HashPassword hashPassword = new HashPassword();
 
     private UserService userSource;
     private String[] requestParameters;
@@ -39,15 +36,15 @@ public class LogIn implements Command {
         String password = requestParameters[1];
         try {
             if (userValidation.isUserDataValid(userName, password)) {
-                User tempUser = new User(userName, hashPassword.hashPassword(password), AccessLevel.DEFAULT);
-                if (userSource.logIn(tempUser).getName().equals(tempUser.getName())) {
-                    UserHolder.setUser(userSource.logIn(tempUser));
+                User tempUser = new User(userName, password, AccessLevel.DEFAULT);
+                UserHolder.setUser(userSource.logIn(tempUser));
+                if (tempUser.getName().equals(UserHolder.getUser().getName())){
                     result = true;
-                } else {
+                }else {
                     resultLine.append(INCORRECT_PASSWORD_OR_LOGIN);
                 }
             }
-        } catch (ServiceException | LibraryException e) {
+        } catch (ServiceException e) {
             LOGGER.warn("Exception in log in command ", e);
             resultLine.append(e.getMessage());
         }
@@ -68,7 +65,4 @@ public class LogIn implements Command {
         this.userSource = userSource;
     }
 
-    public void setHashPassword(HashPassword hashPassword) {
-        this.hashPassword = hashPassword;
-    }
 }
